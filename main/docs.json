@@ -14,7 +14,7 @@
   },
   "favicon": "/favicon.svg",
   "appearance": {
-    "default": "dark"
+    "default": "system"
   },
   "background": {
     "decoration": "gradient",
