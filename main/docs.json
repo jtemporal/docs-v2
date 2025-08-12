@@ -125,6 +125,25 @@
               }
             ]
           }
+          {
+            "tab": "APIs",
+            "groups": [
+              {
+                "group": " ",
+                "pages": [
+                  "docs/quickstarts"
+                ]
+              },
+              {
+                "group": "Single-page app libraries",
+                "pages": [
+                  "docs/quickstart/spa/angular/interactive",
+                  "docs/quickstart/native/android/interactive"
+                ]
+              }
+            ]
+          }
+
         ]
       },
       {
