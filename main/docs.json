@@ -131,14 +131,13 @@
               {
                 "group": " ",
                 "pages": [
-                  "docs/apis"
+                  "docs/apis/apis"
                 ]
               },
               {
                 "group": "My Account APIs",
                 "pages": [
-                  "docs/quickstart/spa/angular/interactive",
-                  "docs/quickstart/native/android/interactive"
+                  "docs/apis/my-account/my-account"
                 ]
               }
             ]
