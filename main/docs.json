@@ -135,8 +135,8 @@
                 ]
               },
               {
-                "group": "Management API Reference",
-                "openapi": "https://auth0.com/docs/api/management/openapi.json"
+                "group": "My Org API Reference",
+                "openapi": "docs/api/my-org/my-org-openapi.json"
               }
             ]
           }
