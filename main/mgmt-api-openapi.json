@@ -4998,3 +4998,5003 @@
           {
             "name": "id",
             "in": "path",
+            "description": "The id of the connection to retrieve its default SCIM mapping",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The connection's default SCIM mapping was retrieved. See <strong>Response Schemas</strong> for schema.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetScimConfigurationDefaultMappingResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Path validation error"
+          },
+          "404": {
+            "description": "Not Found",
+            "x-description-1": "The connection does not exist"
+          }
+        },
+        "operationId": "get_default-mapping",
+        "x-operation-name": "getDefaultScimMapping",
+        "x-operation-group": "connectionsScim",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:scim_config"
+            ]
+          }
+        ]
+      }
+    },
+    "/connections/{id}/scim-configuration/tokens": {
+      "get": {
+        "summary": "Get a connection's SCIM tokens",
+        "description": "Retrieves all scim tokens by its connection <code>id</code>.\n",
+        "tags": [
+          "connections"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the connection to retrieve its SCIM configuration",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The connection's SCIM tokens were retrieved. See <strong>Response Schemas</strong> for schema.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetScimTokensResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Path validation error"
+          },
+          "404": {
+            "description": "The connection does not exist"
+          }
+        },
+        "operationId": "get_scim_tokens",
+        "x-operation-name": "getScimTokens",
+        "x-operation-group": "connectionsScim",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:scim_token"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a SCIM Token",
+        "description": "Create a scim token for a scim client.\n",
+        "tags": [
+          "connections"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the connection to create its SCIM token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateScimTokenRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateScimTokenRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The connection's SCIM token was created. See <strong>Response Schemas</strong> for schema.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateScimTokenResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Path validation error"
+          },
+          "404": {
+            "description": "The connection does not exist"
+          },
+          "409": {
+            "description": "Maximum of 2 tokens already issued for this connection"
+          }
+        },
+        "operationId": "post_scim_token",
+        "x-operation-name": "createScimToken",
+        "x-operation-group": "connectionsScim",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:scim_token"
+            ]
+          }
+        ]
+      }
+    },
+    "/connections/{id}/scim-configuration/tokens/{tokenId}": {
+      "delete": {
+        "summary": "Delete a connection's SCIM token",
+        "description": "Deletes a scim token by its connection <code>id</code> and <code>tokenId</code>.\n",
+        "tags": [
+          "connections"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The connection id that owns the SCIM token to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tokenId",
+            "in": "path",
+            "description": "The id of the scim token to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The SCIM token has been deleted."
+          },
+          "400": {
+            "description": "Path validation error"
+          },
+          "404": {
+            "description": "The connection does not exist"
+          }
+        },
+        "operationId": "delete_tokens_by_tokenId",
+        "x-operation-name": "deleteScimToken",
+        "x-operation-group": "connectionsScim",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:scim_token"
+            ]
+          }
+        ]
+      }
+    },
+    "/connections/{id}/status": {
+      "get": {
+        "summary": "Check connection status",
+        "description": "Retrieves the status of an ad/ldap connection referenced by its <code>ID</code>. <code>200 OK</code> http status code response is returned  when the connection is online, otherwise a <code>404</code> status code is returned along with an error message",
+        "tags": [
+          "connections"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the connection to check",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Connection status successfully retrieved."
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:connections."
+          },
+          "404": {
+            "description": "Connection not found.",
+            "x-description-1": "not connected to any node"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_status",
+        "x-operation-name": "checkStatus",
+        "x-operation-group": "connections",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:connections"
+            ]
+          }
+        ]
+      }
+    },
+    "/connections/{id}/users": {
+      "delete": {
+        "summary": "Delete a connection user",
+        "description": "Deletes a specified connection user by its email (you cannot delete all users from specific connection). Currently, only Database Connections are supported.\n",
+        "tags": [
+          "connections"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the connection (currently only database connections are supported)",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The email of the user to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The user no longer exists."
+          },
+          "400": {
+            "description": "The connection does not exist",
+            "x-description-1": "Connection must be a database connection",
+            "x-description-2": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation"
+          },
+          "403": {
+            "description": "Insufficient scope, expected any of: delete:users"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_users_by_email",
+        "x-operation-name": "deleteUserByEmail",
+        "x-operation-request-parameters-name": "DeleteConnectionUsersByEmailQueryParameters",
+        "x-operation-group": [
+          "connections",
+          "users"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:users"
+            ]
+          }
+        ]
+      }
+    },
+    "/custom-domains": {
+      "get": {
+        "summary": "Get custom domains configurations",
+        "description": "Retrieve details on <a href=\"https://auth0.com/docs/custom-domains\">custom domains</a>.",
+        "tags": [
+          "custom-domains"
+        ],
+        "responses": {
+          "200": {
+            "description": "Custom domains successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListCustomDomainsResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:custom_domains.",
+            "x-description-1": "Some fields cannot be read with the permissions granted by the bearer token scopes. The message will vary depending on the fields and the scopes.",
+            "x-description-2": "The account is not allowed to perform this operation.",
+            "x-description-3": "There must be a verified credit card on file to perform this operation"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_custom-domains",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListCustomDomainsRequestParameters",
+        "x-operation-group": "customDomains",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:custom_domains"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Configure a new custom domain",
+        "description": "Create a new custom domain.\n\nNote: The custom domain will need to be verified before it will accept\nrequests.\n\nOptional attributes that can be updated:\n\n- custom_client_ip_header\n- tls_policy\n\n\nTLS Policies:\n\n- recommended - for modern usage this includes TLS 1.2 only\n- compatible - compatible with older browsers this policy includes TLS 1.0, 1.1, 1.2\n\n\nSome considerations:\n\n- The TLS ciphers and protocols available in each TLS policy follow industry recommendations, and may be updated occasionally.\n- Do not use the <code>compatible</code> TLS policy unless you have clients that require TLS 1.0.\n",
+        "tags": [
+          "custom-domains"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomDomainRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCustomDomainRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Custom domain successfully created (verification is pending).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateCustomDomainResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause.",
+            "x-description-1": "The 'tls_policy' cannot be set on self_managed domains",
+            "x-description-2": "The 'custom_client_ip_header' cannot be set on auth0_managed domains"
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:custom_domains.",
+            "x-description-1": "The account is not allowed to perform this operation.",
+            "x-description-2": "There must be a verified credit card on file to perform this operation"
+          },
+          "409": {
+            "description": "Custom domain already exists.",
+            "x-description-1": "You reached the maximum number of custom domains for your account."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_custom-domains",
+        "x-operation-name": "create",
+        "x-operation-group": "customDomains",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:custom_domains"
+            ]
+          }
+        ]
+      }
+    },
+    "/custom-domains/{id}": {
+      "get": {
+        "summary": "Get custom domain configuration",
+        "description": "Retrieve a custom domain configuration and status.",
+        "tags": [
+          "custom-domains"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the custom domain to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Custom domain successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCustomDomainResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:custom_domains.",
+            "x-description-1": "Some fields cannot be read with the permissions granted by the bearer token scopes. The message will vary depending on the fields and the scopes.",
+            "x-description-2": "The account is not allowed to perform this operation.",
+            "x-description-3": "There must be a verified credit card on file to perform this operation"
+          },
+          "404": {
+            "description": "Custom domain not found."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_custom-domains_by_id",
+        "x-operation-name": "get",
+        "x-operation-group": "customDomains",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:custom_domains"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete custom domain configuration",
+        "description": "Delete a custom domain and stop serving requests for it.",
+        "tags": [
+          "custom-domains"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the custom domain to delete.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Custom domain successfully deleted."
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:custom_domains.",
+            "x-description-1": "The account is not allowed to perform this operation.",
+            "x-description-2": "There must be a verified credit card on file to perform this operation."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_custom-domains_by_id",
+        "x-operation-name": "delete",
+        "x-operation-group": "customDomains",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:custom_domains"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update custom domain configuration",
+        "description": "Update a custom domain.\n\nThese are the attributes that can be updated:\n\n- custom_client_ip_header\n- tls_policy\n\n<h5>Updating CUSTOM_CLIENT_IP_HEADER for a custom domain</h5>To update the <code>custom_client_ip_header</code> for a domain, the body to\nsend should be:\n<pre><code>{ \"custom_client_ip_header\": \"cf-connecting-ip\" }</code></pre>\n\n<h5>Updating TLS_POLICY for a custom domain</h5>To update the <code>tls_policy</code> for a domain, the body to send should be:\n<pre><code>{ \"tls_policy\": \"recommended\" }</code></pre>\n\n\nTLS Policies:\n\n- recommended - for modern usage this includes TLS 1.2 only\n\n\nSome considerations:\n\n- The TLS ciphers and protocols available in each TLS policy follow industry recommendations, and may be updated occasionally.\n- The <code>compatible</code> TLS policy is no longer supported.\n",
+        "tags": [
+          "custom-domains"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the custom domain to update",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomDomainRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCustomDomainRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Custom domain updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateCustomDomainResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause.",
+            "x-description-1": "The 'tls_policy' cannot be set on self_managed domains",
+            "x-description-2": "The 'custom_client_ip_header' cannot be set on auth0_managed domains"
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected: update:custom_domains.",
+            "x-description-1": "Your account is not allowed to perform this operation.",
+            "x-description-2": "There must be a verified credit card on file to perform this operation"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_custom-domains_by_id",
+        "x-operation-name": "update",
+        "x-operation-group": "customDomains",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:custom_domains"
+            ]
+          }
+        ]
+      }
+    },
+    "/custom-domains/{id}/test": {
+      "post": {
+        "summary": "Test a custom domain",
+        "description": "Run the test process on a custom domain.",
+        "tags": [
+          "custom-domains"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the custom domain to test.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Custom domain test successfully completed.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestCustomDomainResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:custom_domains.",
+            "x-description-1": "The account is not allowed to perform this operation.",
+            "x-description-2": "There must be a verified credit card on file to perform this operation"
+          },
+          "404": {
+            "description": "Custom domain not found."
+          },
+          "409": {
+            "description": "The custom domain is not ready."
+          }
+        },
+        "operationId": "post_test_domain",
+        "x-operation-name": "test",
+        "x-operation-group": "customDomains",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:custom_domains"
+            ]
+          }
+        ]
+      }
+    },
+    "/custom-domains/{id}/verify": {
+      "post": {
+        "summary": "Verify a custom domain",
+        "description": "Run the verification process on a custom domain.\n\nNote: Check the <code>status</code> field to see its verification status. Once verification is complete, it may take up to 10 minutes before the custom domain can start accepting requests.\n\nFor <code>self_managed_certs</code>, when the custom domain is verified for the first time, the response will also include the <code>cname_api_key</code> which you will need to configure your proxy. This key must be kept secret, and is used to validate the proxy requests.\n\n<a href=\"https://auth0.com/docs/custom-domains#step-2-verify-ownership\">Learn more</a> about verifying custom domains that use Auth0 Managed certificates.\n<a href=\"https://auth0.com/docs/custom-domains/self-managed-certificates#step-2-verify-ownership\">Learn more</a> about verifying custom domains that use Self Managed certificates.\n",
+        "tags": [
+          "custom-domains"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the custom domain to verify.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Custom domain successfully verified.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/VerifyCustomDomainResponseContent"
+                }
+              }
+            },
+            "x-description-1": "Custom domain failed verification."
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause.",
+            "x-description-1": "Custom domain already verified."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:custom_domains.",
+            "x-description-1": "The account is not allowed to perform this operation.",
+            "x-description-2": "There must be a verified credit card on file to perform this operation"
+          },
+          "404": {
+            "description": "Custom domain not found."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_verify",
+        "x-operation-name": "verify",
+        "x-operation-group": "customDomains",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:custom_domains"
+            ]
+          }
+        ]
+      }
+    },
+    "/device-credentials": {
+      "get": {
+        "summary": "Retrieve device credentials",
+        "description": "Retrieve device credential information (<code>public_key</code>, <code>refresh_token</code>, or <code>rotating_refresh_token</code>) associated with a specific user.\n",
+        "tags": [
+          "device-credentials"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page.  There is a maximum of 1000 results allowed from this endpoint.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "include_fields",
+            "in": "query",
+            "description": "Whether specified fields are to be included (true) or excluded (false).",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "user_id of the devices to retrieve.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_id",
+            "in": "query",
+            "description": "client_id of the devices to retrieve.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of credentials to retrieve. Must be `public_key`, `refresh_token` or `rotating_refresh_token`. The property will default to `refresh_token` when paging is requested",
+            "schema": {
+              "$ref": "#/components/schemas/DeviceCredentialTypeEnum"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Device credentials successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListDeviceCredentialsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation.",
+            "x-description-3": "Username is malformed, try with '{connection}\\{email_or_username}'",
+            "x-description-4": "Bad username or password."
+          },
+          "403": {
+            "description": "User to be acted on does not match subject in bearer token.",
+            "x-description-1": "Insufficient scope, expected any of: read:device_credentials",
+            "x-description-2": "Cannot retrieve device credentials for that user.",
+            "x-description-3": "Cannot retrieve device credentials for that client.",
+            "x-description-4": "Must provide client_id parameter."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_device-credentials",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListDeviceCredentialsRequestParameters",
+        "x-operation-group": "deviceCredentials",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:device_credentials"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a device public key credential",
+        "description": "Create a device credential public key to manage refresh token rotation for a given <code>user_id</code>. Device Credentials APIs are designed for ad-hoc administrative use only and paging is by default enabled for GET requests.\n\nWhen refresh token rotation is enabled, the endpoint becomes consistent. For more information, read <a href=\"https://auth0.com/docs/get-started/tenant-settings/signing-keys\"> Signing Keys</a>.\n",
+        "tags": [
+          "device-credentials"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePublicKeyDeviceCredentialRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePublicKeyDeviceCredentialRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Device credentials successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePublicKeyDeviceCredentialResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Username is malformed, try with \"{connection}\\{email_or_username}\".",
+            "x-description-3": "Bad username or password."
+          },
+          "403": {
+            "description": "Cannot create device credentials for that user.",
+            "x-description-1": "Cannot create device credentials for that client.",
+            "x-description-2": "Insufficient scope; expected any of: create:current_user_device_credentials."
+          },
+          "409": {
+            "description": "A public key already exists for the device."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_device-credentials",
+        "x-operation-name": "createPublicKey",
+        "x-operation-group": "deviceCredentials",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:current_user_device_credentials"
+            ]
+          }
+        ]
+      }
+    },
+    "/device-credentials/{id}": {
+      "delete": {
+        "summary": "Delete a device credential",
+        "description": "Permanently delete a device credential (such as a refresh token or public key) with the given ID.",
+        "tags": [
+          "device-credentials"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the credential to delete.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Device credentials successfully deleted."
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation.",
+            "x-description-3": "Username is malformed, try with \"{connection}\\{email_or_username}\".",
+            "x-description-4": "Bad username or password."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:device_credentials, update:current_user, delete:current_user_device_credentials."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_device-credentials_by_id",
+        "x-operation-name": "delete",
+        "x-operation-group": "deviceCredentials",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:device_credentials",
+              "delete:current_user_device_credentials"
+            ]
+          }
+        ]
+      }
+    },
+    "/email-templates": {
+      "post": {
+        "summary": "Create an email template",
+        "description": "Create an email template.",
+        "tags": [
+          "email-templates"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEmailTemplateRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEmailTemplateRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Template successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateEmailTemplateResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause.",
+            "x-description-1": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected: create:email_templates."
+          },
+          "409": {
+            "description": "Template (templateName) already exists."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_email-templates",
+        "x-operation-name": "create",
+        "x-operation-group": "emailTemplates",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:email_templates"
+            ]
+          }
+        ]
+      }
+    },
+    "/email-templates/{templateName}": {
+      "get": {
+        "summary": "Get an email template",
+        "description": "Retrieve an email template by pre-defined name. These names are `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, and `user_invitation`. The names `change_password`, and `password_reset` are also supported for legacy scenarios.",
+        "tags": [
+          "email-templates"
+        ],
+        "parameters": [
+          {
+            "name": "templateName",
+            "in": "path",
+            "description": "Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `change_password` (legacy), or `password_reset` (legacy).",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EmailTemplateNameEnum"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Template successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEmailTemplateResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected: read:email_templates."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_email-templates_by_templateName",
+        "x-operation-name": "get",
+        "x-operation-group": "emailTemplates",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:email_templates"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Patch an email template",
+        "description": "Modify an email template.",
+        "tags": [
+          "email-templates"
+        ],
+        "parameters": [
+          {
+            "name": "templateName",
+            "in": "path",
+            "description": "Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `change_password` (legacy), or `password_reset` (legacy).",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EmailTemplateNameEnum"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmailTemplateRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmailTemplateRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Template successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateEmailTemplateResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected: update:email_templates."
+          },
+          "404": {
+            "description": "Template not found and cannot be updated."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_email-templates_by_templateName",
+        "x-operation-name": "update",
+        "x-operation-group": "emailTemplates",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:email_templates"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update an email template",
+        "description": "Update an email template.",
+        "tags": [
+          "email-templates"
+        ],
+        "parameters": [
+          {
+            "name": "templateName",
+            "in": "path",
+            "description": "Template name. Can be `verify_email`, `verify_email_by_code`, `reset_email`, `reset_email_by_code`, `welcome_email`, `blocked_account`, `stolen_credentials`, `enrollment_email`, `mfa_oob_code`, `user_invitation`, `change_password` (legacy), or `password_reset` (legacy).",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EmailTemplateNameEnum"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetEmailTemplateRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/SetEmailTemplateRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Template successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetEmailTemplateResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected: update:email_templates."
+          },
+          "404": {
+            "description": "Template not found."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "put_email-templates_by_templateName",
+        "x-operation-name": "set",
+        "x-operation-group": "emailTemplates",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:email_templates"
+            ]
+          }
+        ]
+      }
+    },
+    "/emails/provider": {
+      "get": {
+        "summary": "Get email provider",
+        "description": "Retrieve details of the <a href=\"https://auth0.com/docs/customize/email/smtp-email-providers\">email provider configuration</a> in your tenant. A list of fields to include or exclude may also be specified.\n",
+        "tags": [
+          "emails"
+        ],
+        "parameters": [
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Comma-separated list of fields to include or exclude (dependent upon include_fields) from the result. Leave empty to retrieve `name` and `enabled`. Additional fields available include `credentials`, `default_from_address`, and `settings`.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "include_fields",
+            "in": "query",
+            "description": "Whether specified fields are to be included (true) or excluded (false).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Email provider successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEmailProviderResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:email_provider."
+          },
+          "404": {
+            "description": "Email provider has not been configured."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_provider",
+        "x-operation-name": "getProvider",
+        "x-operation-request-parameters-name": "GetEmailProviderRequestParameters",
+        "x-operation-group": "emails",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:email_provider"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete email provider",
+        "description": "Delete the email provider.\n",
+        "tags": [
+          "emails"
+        ],
+        "responses": {
+          "204": {
+            "description": "The email provider has been deleted."
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation"
+          },
+          "403": {
+            "description": "Insufficient scope, expected any of: delete:email_provider"
+          },
+          "404": {
+            "description": "Email provider does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_provider",
+        "x-operation-name": "deleteProvider",
+        "x-operation-group": "emails",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:email_provider"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update email provider",
+        "description": "Update an <a href=\"https://auth0.com/docs/email/providers\">email provider</a>. The <code>credentials</code> object\nrequires different properties depending on the email provider (which is specified using the <code>name</code> property):\n<ul>\n  <li><code>mandrill</code> requires <code>api_key</code></li>\n  <li><code>sendgrid</code> requires <code>api_key</code></li>\n  <li>\n    <code>sparkpost</code> requires <code>api_key</code>. Optionally, set <code>region</code> to <code>eu</code> to use\n    the SparkPost service hosted in Western Europe; set to <code>null</code> to use the SparkPost service hosted in\n    North America. <code>eu</code> or <code>null</code> are the only valid values for <code>region</code>.\n  </li>\n  <li>\n    <code>mailgun</code> requires <code>api_key</code> and <code>domain</code>. Optionally, set <code>region</code> to\n    <code>eu</code> to use the Mailgun service hosted in Europe; set to <code>null</code> otherwise. <code>eu</code> or\n    <code>null</code> are the only valid values for <code>region</code>.\n  </li>\n  <li><code>ses</code> requires <code>accessKeyId</code>, <code>secretAccessKey</code>, and <code>region</code></li>\n  <li>\n    <code>smtp</code> requires <code>smtp_host</code>, <code>smtp_port</code>, <code>smtp_user</code>, and\n    <code>smtp_pass</code>\n  </li>\n</ul>\nDepending on the type of provider it is possible to specify <code>settings</code> object with different configuration\noptions, which will be used when sending an email:\n<ul>\n  <li>\n    <code>smtp</code> provider, <code>settings</code> may contain <code>headers</code> object.\n    <ul>\n      <li>\n        When using AWS SES SMTP host, you may provide a name of configuration set in\n        <code>X-SES-Configuration-Set</code> header. Value must be a string.\n      </li>\n      <li>\n        When using Sparkpost host, you may provide value for\n        <code>X-MSYS_API</code> header. Value must be an object.\n      </li>\n    </ul>\n    for <code>ses</code> provider, <code>settings</code> may contain <code>message</code> object, where you can provide\n    a name of configuration set in <code>configuration_set_name</code> property. Value must be a string.\n  </li>\n</ul>\n",
+        "tags": [
+          "emails"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmailProviderRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEmailProviderRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Email provider successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateEmailProviderResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:email_provider."
+          },
+          "404": {
+            "description": "Email provider has not been configured."
+          },
+          "409": {
+            "description": "No deployed action was found."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_provider",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:email_provider"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Configure email provider",
+        "description": "Create an <a href=\"https://auth0.com/docs/email/providers\">email provider</a>. The <code>credentials</code> object\nrequires different properties depending on the email provider (which is specified using the <code>name</code> property):\n<ul>\n  <li><code>mandrill</code> requires <code>api_key</code></li>\n  <li><code>sendgrid</code> requires <code>api_key</code></li>\n  <li>\n    <code>sparkpost</code> requires <code>api_key</code>. Optionally, set <code>region</code> to <code>eu</code> to use\n    the SparkPost service hosted in Western Europe; set to <code>null</code> to use the SparkPost service hosted in\n    North America. <code>eu</code> or <code>null</code> are the only valid values for <code>region</code>.\n  </li>\n  <li>\n    <code>mailgun</code> requires <code>api_key</code> and <code>domain</code>. Optionally, set <code>region</code> to\n    <code>eu</code> to use the Mailgun service hosted in Europe; set to <code>null</code> otherwise. <code>eu</code> or\n    <code>null</code> are the only valid values for <code>region</code>.\n  </li>\n  <li><code>ses</code> requires <code>accessKeyId</code>, <code>secretAccessKey</code>, and <code>region</code></li>\n  <li>\n    <code>smtp</code> requires <code>smtp_host</code>, <code>smtp_port</code>, <code>smtp_user</code>, and\n    <code>smtp_pass</code>\n  </li>\n</ul>\nDepending on the type of provider it is possible to specify <code>settings</code> object with different configuration\noptions, which will be used when sending an email:\n<ul>\n  <li>\n    <code>smtp</code> provider, <code>settings</code> may contain <code>headers</code> object.\n    <ul>\n      <li>\n        When using AWS SES SMTP host, you may provide a name of configuration set in\n        <code>X-SES-Configuration-Set</code> header. Value must be a string.\n      </li>\n      <li>\n        When using Sparkpost host, you may provide value for\n        <code>X-MSYS_API</code> header. Value must be an object.\n      </li>\n    </ul>\n  </li>\n  <li>\n    for <code>ses</code> provider, <code>settings</code> may contain <code>message</code> object, where you can provide\n    a name of configuration set in <code>configuration_set_name</code> property. Value must be a string.\n  </li>\n</ul>\n",
+        "tags": [
+          "emails"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEmailProviderRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEmailProviderRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Email provider successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateEmailProviderResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:email_provider."
+          },
+          "409": {
+            "description": "Email provider is already configured.",
+            "x-description-1": "No deployed action was found."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_provider",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:email_provider"
+            ]
+          }
+        ]
+      }
+    },
+    "/event-streams": {
+      "get": {
+        "summary": "Get event streams",
+        "tags": [
+          "event-streams"
+        ],
+        "parameters": [
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Optional Id from which to start selection.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event streams successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EventStreamResponseContent"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid query string paging options. The message will vary depending on the cause"
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:event_streams."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_event-streams",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListEventStreamsRequestParameters",
+        "x-operation-group": "eventStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:event_streams"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create an event stream",
+        "tags": [
+          "event-streams"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateEventStreamWebHookRequestContent"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CreateEventStreamEventBridgeRequestContent"
+                  }
+                ]
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/CreateEventStreamWebHookRequestContent"
+                  },
+                  {
+                    "$ref": "#/components/schemas/CreateEventStreamEventBridgeRequestContent"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Event Stream stream created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateEventStreamResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:event_streams."
+          },
+          "409": {
+            "description": "You have reached the maximum number of event streams for your account OR Event stream name already in use."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_event-streams",
+        "x-operation-name": "create",
+        "x-operation-group": "eventStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:event_streams"
+            ]
+          }
+        ]
+      }
+    },
+    "/event-streams/{id}": {
+      "get": {
+        "summary": "Get an event stream by ID",
+        "tags": [
+          "event-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier for the event stream.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event stream successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEventStreamResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:event_streams."
+          },
+          "404": {
+            "description": "The event stream does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_event-streams_by_id",
+        "x-operation-name": "get",
+        "x-operation-group": "eventStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:event_streams"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete an event stream",
+        "tags": [
+          "event-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier for the event stream.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The event stream was deleted."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:event_streams."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_event-streams_by_id",
+        "x-operation-name": "delete",
+        "x-operation-group": "eventStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:event_streams"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update an event stream",
+        "tags": [
+          "event-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier for the event stream.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEventStreamRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEventStreamRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Event stream successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateEventStreamResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:event_streams."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_event-streams_by_id",
+        "x-operation-name": "update",
+        "x-operation-group": "eventStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:event_streams"
+            ]
+          }
+        ]
+      }
+    },
+    "/event-streams/{id}/deliveries": {
+      "get": {
+        "summary": "Get this event stream's delivery history",
+        "tags": [
+          "event-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier for the event stream.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "statuses",
+            "in": "query",
+            "description": "Comma-separated list of statuses by which to filter",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "event_types",
+            "in": "query",
+            "description": "Comma-separated list of event types by which to filter",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "An RFC-3339 date-time for redelivery start, inclusive. Does not allow sub-second precision.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "description": "An RFC-3339 date-time for redelivery end, exclusive. Does not allow sub-second precision.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Optional Id from which to start selection.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event stream deliveries successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EventStreamDelivery"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid query string paging options. The message will vary depending on the cause"
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:event_streams, read:event_deliveries."
+          },
+          "404": {
+            "description": "The event stream does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_event_deliveries",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListEventStreamDeliveriesRequestParameters",
+        "x-operation-group": [
+          "eventStreams",
+          "deliveries"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:event_streams",
+              "read:event_deliveries"
+            ]
+          }
+        ]
+      }
+    },
+    "/event-streams/{id}/deliveries/{event_id}": {
+      "get": {
+        "summary": "Get a specific event's delivery history",
+        "tags": [
+          "event-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier for the event stream.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "Unique identifier for the event",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delivery history for event successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEventStreamDeliveryHistoryResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:event_deliveries."
+          },
+          "404": {
+            "description": "The event stream does not exist.",
+            "x-description-1": "The event does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_deliveries_by_event_id",
+        "x-operation-name": "getHistory",
+        "x-operation-group": [
+          "eventStreams",
+          "deliveries"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:event_deliveries"
+            ]
+          }
+        ]
+      }
+    },
+    "/event-streams/{id}/redeliver": {
+      "post": {
+        "summary": "Redeliver failed events",
+        "tags": [
+          "event-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier for the event stream.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventStreamRedeliveryRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventStreamRedeliveryRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Redelivery request accepted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateEventStreamRedeliveryResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:event_deliveries."
+          },
+          "404": {
+            "description": "The event stream does not exist."
+          },
+          "409": {
+            "description": "One or more events is not in a state that allows redelivery."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_redeliver",
+        "x-operation-name": "create",
+        "x-operation-group": [
+          "eventStreams",
+          "redeliveries"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:event_deliveries"
+            ]
+          }
+        ]
+      }
+    },
+    "/event-streams/{id}/redeliver/{event_id}": {
+      "post": {
+        "summary": "Redeliver a single failed event by ID",
+        "tags": [
+          "event-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier for the event stream.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "event_id",
+            "in": "path",
+            "description": "Unique identifier for the event",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Redelivery request accepted."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:event_deliveries."
+          },
+          "404": {
+            "description": "The event stream does not exist.",
+            "x-description-1": "The event does not exist."
+          },
+          "409": {
+            "description": "The event is not in a state that allows redelivery."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_redeliver_by_event_id",
+        "x-operation-name": "createById",
+        "x-operation-group": [
+          "eventStreams",
+          "redeliveries"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:event_deliveries"
+            ]
+          }
+        ]
+      }
+    },
+    "/event-streams/{id}/stats": {
+      "get": {
+        "summary": "Get stats for an event stream",
+        "tags": [
+          "event-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier for the event stream.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date_from",
+            "in": "query",
+            "description": "The RFC3339 start date for the stats query.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "date_to",
+            "in": "query",
+            "description": "The RFC3339 end date for the stats query.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Event stream stats successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEventStreamStatsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:event_deliveries."
+          },
+          "404": {
+            "description": "The event stream does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_stats",
+        "x-operation-name": "get",
+        "x-operation-group": "eventStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:event_deliveries"
+            ]
+          }
+        ]
+      }
+    },
+    "/event-streams/{id}/test": {
+      "post": {
+        "summary": "Send a test event to an event stream",
+        "tags": [
+          "event-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Unique identifier for the event stream.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventStreamTestEventRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEventStreamTestEventRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Test event successfully submitted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateEventStreamTestEventResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:event_streams."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_test_event",
+        "x-operation-name": "createTestEvent",
+        "x-operation-group": "eventStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:event_streams"
+            ]
+          }
+        ]
+      }
+    },
+    "/flows": {
+      "get": {
+        "summary": "Get flows",
+        "tags": [
+          "flows"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "hydrate",
+            "in": "query",
+            "description": "hydration param",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "maxLength": 50,
+                "enum": [
+                  "form_count"
+                ]
+              }
+            }
+          },
+          {
+            "name": "synchronous",
+            "in": "query",
+            "description": "flag to filter by sync/async flows",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Flows successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "id",
+                          "name",
+                          "created_at",
+                          "updated_at"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "maxLength": 30,
+                            "format": "flow-id"
+                          },
+                          "name": {
+                            "type": "string",
+                            "minLength": 1,
+                            "maxLength": 150
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "format": "date-time"
+                          },
+                          "executed_at": {
+                            "type": "string",
+                            "format": "date"
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "start": {
+                          "type": "number"
+                        },
+                        "limit": {
+                          "type": "number"
+                        },
+                        "total": {
+                          "type": "number"
+                        },
+                        "flows": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "id",
+                              "name",
+                              "created_at",
+                              "updated_at"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "maxLength": 30,
+                                "format": "flow-id"
+                              },
+                              "name": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 150
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "updated_at": {
+                                "type": "string",
+                                "format": "date-time"
+                              },
+                              "executed_at": {
+                                "type": "string",
+                                "format": "date"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause.",
+            "x-description-1": "Invalid query string paging options. The message will vary depending on the cause"
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:flows."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_flows",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:flows"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a flow",
+        "tags": [
+          "flows"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 150
+                  },
+                  "actions": {
+                    "type": "array",
+                    "items": {}
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 1,
+                    "maxLength": 150
+                  },
+                  "actions": {
+                    "type": "array",
+                    "items": {}
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Flow successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "name",
+                    "created_at",
+                    "updated_at"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "maxLength": 30,
+                      "format": "flow-id"
+                    },
+                    "name": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 150
+                    },
+                    "actions": {
+                      "type": "array",
+                      "items": {}
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "executed_at": {
+                      "type": "string",
+                      "format": "date"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:flows."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_flows",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:flows"
+            ]
+          }
+        ]
+      }
+    },
+    "/flows/vault/connections": {
+      "get": {
+        "summary": "Get Flows Vault connection list",
+        "tags": [
+          "flows"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Vault connections successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "id",
+                          "app_id",
+                          "name",
+                          "ready",
+                          "created_at",
+                          "updated_at",
+                          "fingerprint"
+                        ],
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "Flows Vault Connection identifier.",
+                            "maxLength": 30,
+                            "format": "flows-vault-connections-id"
+                          },
+                          "app_id": {
+                            "type": "string",
+                            "description": "Flows Vault Connection app identifier.",
+                            "minLength": 1,
+                            "maxLength": 55
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "Flows Vault Connection name.",
+                            "minLength": 1,
+                            "maxLength": 150
+                          },
+                          "account_name": {
+                            "type": "string",
+                            "description": "Flows Vault Connection custom account name.",
+                            "minLength": 1,
+                            "maxLength": 150
+                          },
+                          "ready": {
+                            "type": "boolean",
+                            "description": "Whether the Flows Vault Connection is configured."
+                          },
+                          "created_at": {
+                            "type": "string",
+                            "description": "The ISO 8601 formatted date when this Flows Vault Connection was created.",
+                            "format": "date-time"
+                          },
+                          "updated_at": {
+                            "type": "string",
+                            "description": "The ISO 8601 formatted date when this Flows Vault Connection was updated.",
+                            "format": "date-time"
+                          },
+                          "refreshed_at": {
+                            "type": "string",
+                            "description": "The ISO 8601 formatted date when this Flows Vault Connection was refreshed.",
+                            "format": "date-time"
+                          },
+                          "fingerprint": {
+                            "type": "string",
+                            "minLength": 1
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "type": "object",
+                      "additionalProperties": false,
+                      "properties": {
+                        "start": {
+                          "type": "number"
+                        },
+                        "limit": {
+                          "type": "number"
+                        },
+                        "total": {
+                          "type": "number"
+                        },
+                        "connections": {
+                          "type": "array",
+                          "items": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "id",
+                              "app_id",
+                              "name",
+                              "ready",
+                              "created_at",
+                              "updated_at",
+                              "fingerprint"
+                            ],
+                            "properties": {
+                              "id": {
+                                "type": "string",
+                                "description": "Flows Vault Connection identifier.",
+                                "maxLength": 30,
+                                "format": "flows-vault-connections-id"
+                              },
+                              "app_id": {
+                                "type": "string",
+                                "description": "Flows Vault Connection app identifier.",
+                                "minLength": 1,
+                                "maxLength": 55
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "Flows Vault Connection name.",
+                                "minLength": 1,
+                                "maxLength": 150
+                              },
+                              "account_name": {
+                                "type": "string",
+                                "description": "Flows Vault Connection custom account name.",
+                                "minLength": 1,
+                                "maxLength": 150
+                              },
+                              "ready": {
+                                "type": "boolean",
+                                "description": "Whether the Flows Vault Connection is configured."
+                              },
+                              "created_at": {
+                                "type": "string",
+                                "description": "The ISO 8601 formatted date when this Flows Vault Connection was created.",
+                                "format": "date-time"
+                              },
+                              "updated_at": {
+                                "type": "string",
+                                "description": "The ISO 8601 formatted date when this Flows Vault Connection was updated.",
+                                "format": "date-time"
+                              },
+                              "refreshed_at": {
+                                "type": "string",
+                                "description": "The ISO 8601 formatted date when this Flows Vault Connection was refreshed.",
+                                "format": "date-time"
+                              },
+                              "fingerprint": {
+                                "type": "string",
+                                "minLength": 1
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause.",
+            "x-description-1": "Invalid query string paging options. The message will vary depending on the cause"
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:flows_vault_connections."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_flows_vault_connections",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:flows_vault_connections"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a Flows Vault connection",
+        "tags": [
+          "flows"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "ACTIVECAMPAIGN"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "api_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "api_key": {
+                            "type": "string"
+                          },
+                          "base_url": {
+                            "type": "string",
+                            "format": "forms-url-https"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "AIRTABLE"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "api_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "api_key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "AUTH0"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "client_id",
+                          "client_secret",
+                          "domain"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_APP"
+                            ]
+                          },
+                          "client_id": {
+                            "type": "string"
+                          },
+                          "client_secret": {
+                            "type": "string"
+                          },
+                          "domain": {
+                            "type": "string",
+                            "format": "hostname-rfc2181"
+                          },
+                          "audience": {
+                            "type": "string",
+                            "minLength": 1,
+                            "format": "forms-url-https"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "BIGQUERY"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_JWT"
+                            ]
+                          },
+                          "project_id": {
+                            "type": "string"
+                          },
+                          "private_key": {
+                            "type": "string"
+                          },
+                          "client_email": {
+                            "type": "string",
+                            "format": "email"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "CLEARBIT"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "secret_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "secret_key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "DOCUSIGN"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_CODE"
+                            ]
+                          },
+                          "code": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "GOOGLE_SHEETS"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_CODE"
+                            ]
+                          },
+                          "code": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "HTTP"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "token"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "BEARER"
+                            ]
+                          },
+                          "token": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "HUBSPOT"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "type",
+                              "api_key"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "API_KEY"
+                                ]
+                              },
+                              "api_key": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "OAUTH_CODE"
+                                ]
+                              },
+                              "code": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "JWT"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "type",
+                          "algorithm"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "JWT"
+                            ]
+                          },
+                          "algorithm": {
+                            "type": "string",
+                            "enum": [
+                              "HS256",
+                              "HS384",
+                              "HS512",
+                              "RS256",
+                              "RS384",
+                              "RS512",
+                              "ES256",
+                              "ES384",
+                              "ES512",
+                              "PS256",
+                              "PS384",
+                              "PS512"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "MAILCHIMP"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "type",
+                              "secret_key"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "API_KEY"
+                                ]
+                              },
+                              "secret_key": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "OAUTH_CODE"
+                                ]
+                              },
+                              "code": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "MAILJET"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "api_key",
+                          "secret_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "api_key": {
+                            "type": "string"
+                          },
+                          "secret_key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "PIPEDRIVE"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "type",
+                              "token"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "TOKEN"
+                                ]
+                              },
+                              "token": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "OAUTH_CODE"
+                                ]
+                              },
+                              "code": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "SALESFORCE"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_CODE"
+                            ]
+                          },
+                          "code": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "SENDGRID"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "api_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "api_key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "SLACK"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "type",
+                              "url"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "WEBHOOK"
+                                ]
+                              },
+                              "url": {
+                                "type": "string",
+                                "format": "forms-url-https"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "OAUTH_CODE"
+                                ]
+                              },
+                              "code": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "STRIPE"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "type",
+                              "private_key",
+                              "public_key"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "KEY_PAIR"
+                                ]
+                              },
+                              "private_key": {
+                                "type": "string"
+                              },
+                              "public_key": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "OAUTH_CODE"
+                                ]
+                              },
+                              "code": {
+                                "type": "string"
+                              },
+                              "environment": {
+                                "type": "string",
+                                "enum": [
+                                  "live",
+                                  "test"
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "TELEGRAM"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "token"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "TOKEN"
+                            ]
+                          },
+                          "token": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "TWILIO"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "account_id",
+                          "api_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "account_id": {
+                            "type": "string"
+                          },
+                          "api_key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "WHATSAPP"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "token"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "TOKEN"
+                            ]
+                          },
+                          "token": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "ZAPIER"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "url"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "WEBHOOK"
+                            ]
+                          },
+                          "url": {
+                            "type": "string",
+                            "format": "forms-url-https"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "ACTIVECAMPAIGN"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "api_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "api_key": {
+                            "type": "string"
+                          },
+                          "base_url": {
+                            "type": "string",
+                            "format": "forms-url-https"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "AIRTABLE"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "api_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "api_key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "AUTH0"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "client_id",
+                          "client_secret",
+                          "domain"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_APP"
+                            ]
+                          },
+                          "client_id": {
+                            "type": "string"
+                          },
+                          "client_secret": {
+                            "type": "string"
+                          },
+                          "domain": {
+                            "type": "string",
+                            "format": "hostname-rfc2181"
+                          },
+                          "audience": {
+                            "type": "string",
+                            "minLength": 1,
+                            "format": "forms-url-https"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "BIGQUERY"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_JWT"
+                            ]
+                          },
+                          "project_id": {
+                            "type": "string"
+                          },
+                          "private_key": {
+                            "type": "string"
+                          },
+                          "client_email": {
+                            "type": "string",
+                            "format": "email"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "CLEARBIT"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "secret_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "secret_key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "DOCUSIGN"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_CODE"
+                            ]
+                          },
+                          "code": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "GOOGLE_SHEETS"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_CODE"
+                            ]
+                          },
+                          "code": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "HTTP"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "token"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "BEARER"
+                            ]
+                          },
+                          "token": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "HUBSPOT"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "type",
+                              "api_key"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "API_KEY"
+                                ]
+                              },
+                              "api_key": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "OAUTH_CODE"
+                                ]
+                              },
+                              "code": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "JWT"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "type",
+                          "algorithm"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "JWT"
+                            ]
+                          },
+                          "algorithm": {
+                            "type": "string",
+                            "enum": [
+                              "HS256",
+                              "HS384",
+                              "HS512",
+                              "RS256",
+                              "RS384",
+                              "RS512",
+                              "ES256",
+                              "ES384",
+                              "ES512",
+                              "PS256",
+                              "PS384",
+                              "PS512"
+                            ]
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "MAILCHIMP"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "type",
+                              "secret_key"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "API_KEY"
+                                ]
+                              },
+                              "secret_key": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "OAUTH_CODE"
+                                ]
+                              },
+                              "code": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "MAILJET"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "api_key",
+                          "secret_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "api_key": {
+                            "type": "string"
+                          },
+                          "secret_key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "PIPEDRIVE"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "type",
+                              "token"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "TOKEN"
+                                ]
+                              },
+                              "token": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "OAUTH_CODE"
+                                ]
+                              },
+                              "code": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "SALESFORCE"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_CODE"
+                            ]
+                          },
+                          "code": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "SENDGRID"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "api_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "api_key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "SLACK"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "type",
+                              "url"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "WEBHOOK"
+                                ]
+                              },
+                              "url": {
+                                "type": "string",
+                                "format": "forms-url-https"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "OAUTH_CODE"
+                                ]
+                              },
+                              "code": {
+                                "type": "string"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "STRIPE"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "anyOf": [
+                          {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "required": [
+                              "type",
+                              "private_key",
+                              "public_key"
+                            ],
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "KEY_PAIR"
+                                ]
+                              },
+                              "private_key": {
+                                "type": "string"
+                              },
+                              "public_key": {
+                                "type": "string"
+                              }
+                            }
+                          },
+                          {
+                            "type": "object",
+                            "additionalProperties": true,
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "enum": [
+                                  "OAUTH_CODE"
+                                ]
+                              },
+                              "code": {
+                                "type": "string"
+                              },
+                              "environment": {
+                                "type": "string",
+                                "enum": [
+                                  "live",
+                                  "test"
+                                ]
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "TELEGRAM"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "token"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "TOKEN"
+                            ]
+                          },
+                          "token": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "TWILIO"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "account_id",
+                          "api_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "account_id": {
+                            "type": "string"
+                          },
+                          "api_key": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "WHATSAPP"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "token"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "TOKEN"
+                            ]
+                          },
+                          "token": {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  },
+                  {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                      "app_id": {
+                        "type": "string",
+                        "enum": [
+                          "ZAPIER"
+                        ]
+                      },
+                      "setup": {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "url"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "WEBHOOK"
+                            ]
+                          },
+                          "url": {
+                            "type": "string",
+                            "format": "forms-url-https"
+                          }
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Connection successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "app_id",
+                    "name",
+                    "ready",
+                    "created_at",
+                    "updated_at",
+                    "fingerprint"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Flows Vault Connection identifier.",
+                      "maxLength": 30,
+                      "format": "flows-vault-connections-id"
+                    },
+                    "app_id": {
+                      "type": "string",
+                      "description": "Flows Vault Connection app identifier.",
+                      "minLength": 1,
+                      "maxLength": 55
+                    },
+                    "environment": {
+                      "type": "string",
+                      "description": "Flows Vault Connection environment.",
+                      "minLength": 1,
+                      "maxLength": 55
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Flows Vault Connection name.",
+                      "minLength": 1,
+                      "maxLength": 150
+                    },
+                    "account_name": {
+                      "type": "string",
+                      "description": "Flows Vault Connection custom account name.",
+                      "minLength": 1,
+                      "maxLength": 150
+                    },
+                    "ready": {
+                      "type": "boolean",
+                      "description": "Whether the Flows Vault Connection is configured."
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "The ISO 8601 formatted date when this Flows Vault Connection was created.",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "description": "The ISO 8601 formatted date when this Flows Vault Connection was updated.",
+                      "format": "date-time"
+                    },
+                    "refreshed_at": {
+                      "type": "string",
+                      "description": "The ISO 8601 formatted date when this Flows Vault Connection was refreshed.",
+                      "format": "date-time"
+                    },
+                    "fingerprint": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:flows_vault_connections."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_flows_vault_connections",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:flows_vault_connections"
+            ]
+          }
+        ]
+      }
+    },
+    "/flows/vault/connections/{id}": {
+      "get": {
+        "summary": "Get a Flows Vault connection",
+        "tags": [
+          "flows"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Flows Vault connection ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Flow vault connection successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "id",
+                    "app_id",
+                    "name",
+                    "ready",
+                    "created_at",
+                    "updated_at",
+                    "fingerprint"
+                  ],
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "Flows Vault Connection identifier.",
+                      "maxLength": 30,
+                      "format": "flows-vault-connections-id"
+                    },
+                    "app_id": {
+                      "type": "string",
+                      "description": "Flows Vault Connection app identifier.",
+                      "minLength": 1,
+                      "maxLength": 55
+                    },
+                    "environment": {
+                      "type": "string",
+                      "description": "Flows Vault Connection environment.",
+                      "minLength": 1,
+                      "maxLength": 55
+                    },
+                    "name": {
+                      "type": "string",
+                      "description": "Flows Vault Connection name.",
+                      "minLength": 1,
+                      "maxLength": 150
+                    },
+                    "account_name": {
+                      "type": "string",
+                      "description": "Flows Vault Connection custom account name.",
+                      "minLength": 1,
+                      "maxLength": 150
+                    },
+                    "ready": {
+                      "type": "boolean",
+                      "description": "Whether the Flows Vault Connection is configured."
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "description": "The ISO 8601 formatted date when this Flows Vault Connection was created.",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "description": "The ISO 8601 formatted date when this Flows Vault Connection was updated.",
+                      "format": "date-time"
+                    },
+                    "refreshed_at": {
+                      "type": "string",
+                      "description": "The ISO 8601 formatted date when this Flows Vault Connection was refreshed.",
+                      "format": "date-time"
+                    },
+                    "fingerprint": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:flows_vault_connections."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_flows_vault_connections_by_id",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:flows_vault_connections"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete a Flows Vault connection",
+        "tags": [
+          "flows"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Vault connection id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Connection successfully deleted."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause.",
+            "x-description-1": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:flows_vault_connections."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_flows_vault_connections_by_id",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:flows_vault_connections"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update a Flows Vault connection",
+        "tags": [
+          "flows"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Flows Vault connection ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Flows Vault Connection name.",
+                    "minLength": 1,
+                    "maxLength": 150
+                  },
+                  "setup": {
+                    "type": "object",
+                    "description": "Flows Vault Connection configuration.",
+                    "anyOf": [
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "api_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "api_key": {
+                            "type": "string"
+                          },
+                          "base_url": {
+                            "type": "string",
+                            "format": "forms-url-https"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "api_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "api_key": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "client_id",
+                          "client_secret",
+                          "domain"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_APP"
+                            ]
+                          },
+                          "client_id": {
+                            "type": "string"
+                          },
+                          "client_secret": {
+                            "type": "string"
+                          },
+                          "domain": {
+                            "type": "string",
+                            "format": "hostname-rfc2181"
+                          },
+                          "audience": {
+                            "type": "string",
+                            "minLength": 1,
+                            "format": "forms-url-https"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_JWT"
+                            ]
+                          },
+                          "project_id": {
+                            "type": "string"
+                          },
+                          "private_key": {
+                            "type": "string"
+                          },
+                          "client_email": {
+                            "type": "string",
+                            "format": "email"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "secret_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "secret_key": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_CODE"
+                            ]
+                          },
+                          "code": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_CODE"
+                            ]
+                          },
+                          "code": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "token"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "BEARER"
+                            ]
+                          },
+                          "token": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "api_key"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "API_KEY"
+                            ]
+                          },
+                          "api_key": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "OAUTH_CODE"
+                            ]
+                          },
+                          "code": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "required": [
+                          "type",
+                          "algorithm"
+                        ],
+                        "properties": {
+                          "type": {
+                            "type": "string",
+                            "enum": [
+                              "JWT"
+                            ]
+                          },
+                          "algorithm": {
+                            "type": "string",
+                            "enum": [
+                              "HS256",
+                              "HS384",
+                              "HS512",
+                              "RS256",
+                              "RS384",
+                              "RS512",
+                              "ES256",
+                              "ES384",
+                              "ES512",
+                              "PS256",
+                              "PS384",
+                              "PS512"
+                            ]
+                          }
+                        }
+                      },
+                      {
+                        "type": "object",
+                        "additionalProperties": false,
+                        "required": [
+                          "type",
+                          "secret_key"
+                        ],
+                        "properties": {
