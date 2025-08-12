@@ -136,17 +136,11 @@
               },
               {
                 "group": "Management API Reference",
-                 "openapi": {
-                   "source": "mgmt-api-openapi.json",
-                   "directory": "management"
-                }
+                "openapi": "https://auth0.com/docs/api/management/openapi.json"
               },
               {
                 "group": "My Org API Reference",
-                 "openapi": {
-                   "source": "my-org-openapi.json",
-                   "directory": "my-org"
-                }
+                "openapi": "docs/apis/my-org/my-org-openapi.json"
               }
             ]
           }
