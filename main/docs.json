@@ -142,10 +142,10 @@
                 }
               },
               {
-                "group": "My Account API Reference",
+                "group": "My Org API Reference",
                  "openapi": {
-                   "source": "/path/to/openapi-1.json",
-                   "directory": "api-reference"
+                   "source": "my-org-openapi.json",
+                   "directory": "my-org"
                 }
               }
             ]
