@@ -1,0 +1,2000 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Auth0 Management API",
+    "description": "Auth0 Management API v2.",
+    "termsOfService": "https://auth0.com/web-terms/",
+    "version": "2.0"
+  },
+  "servers": [
+    {
+      "url": "https://{tenantDomain}/api/v2",
+      "variables": {
+        "tenantDomain": {
+          "default": "{TENANT}.auth0.com",
+          "description": "Auth0 Tenant Domain"
+        }
+      }
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "externalDocs": {
+    "description": "Auth0 Management API Documentation",
+    "url": "https://auth0.com/docs/api/management/v2/"
+  },
+  "paths": {
+    "/actions/actions": {
+      "get": {
+        "summary": "Get actions",
+        "description": "Retrieve all actions.\n",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "triggerId",
+            "in": "query",
+            "description": "An actions extensibility point.",
+            "schema": {
+              "$ref": "#/components/schemas/ActionTriggerTypeEnum"
+            }
+          },
+          {
+            "name": "actionName",
+            "in": "query",
+            "description": "The name of the action to retrieve.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "deployed",
+            "in": "query",
+            "description": "Optional filter to only retrieve actions that are deployed.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Use this field to request a specific page of the list results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "The maximum number of results to be returned by the server in single response. 20 by default",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "installed",
+            "in": "query",
+            "description": "Optional. When true, return only installed actions. When false, return only custom actions. Returns all actions by default.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The actions were retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListActionsPaginatedResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: read:actions."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_actions",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListActionsRequestParameters",
+        "x-operation-group": "actions",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:actions"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create an action",
+        "description": "Create an action. Once an action is created, it must be deployed, and then bound to a trigger before it will be executed as part of a flow.\n",
+        "tags": [
+          "actions"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateActionRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateActionRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Action successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateActionResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Request Body."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: create:actions."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_action",
+        "x-operation-name": "create",
+        "x-operation-group": "actions",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:actions"
+            ]
+          }
+        ]
+      }
+    },
+    "/actions/actions/{actionId}/versions": {
+      "get": {
+        "summary": "Get an action's versions",
+        "description": "Retrieve all of an action's versions. An action version is created whenever an action is deployed. An action version is immutable, once created.\n",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "actionId",
+            "in": "path",
+            "description": "The ID of the action.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Use this field to request a specific page of the list results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "This field specify the maximum number of results to be returned by the server. 20 by default",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The action versions were retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListActionVersionsPaginatedResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: read:actions."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_action_versions",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListActionVersionsRequestParameters",
+        "x-operation-group": [
+          "actions",
+          "versions"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:actions"
+            ]
+          }
+        ]
+      }
+    },
+    "/actions/actions/{actionId}/versions/{id}": {
+      "get": {
+        "summary": "Get a specific version of an action",
+        "description": "Retrieve a specific version of an action. An action version is created whenever an action is deployed. An action version is immutable, once created.\n",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "actionId",
+            "in": "path",
+            "description": "The ID of the action.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the action version.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The action version was retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetActionVersionResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: read:actions."
+          },
+          "404": {
+            "description": "The action version does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_action_version",
+        "x-operation-name": "get",
+        "x-operation-group": [
+          "actions",
+          "versions"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:actions"
+            ]
+          }
+        ]
+      }
+    },
+    "/actions/actions/{actionId}/versions/{id}/deploy": {
+      "post": {
+        "summary": "Roll back to a previous action version",
+        "description": "Performs the equivalent of a roll-back of an action to an earlier, specified version. Creates a new, deployed action version that is identical to the specified version. If this action is currently bound to a trigger, the system will begin executing the newly-created version immediately.\n",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of an action version.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "actionId",
+            "in": "path",
+            "description": "The ID of an action.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeployActionVersionRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/DeployActionVersionRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Request to create action version was accepted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeployActionVersionResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Request Body."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: create:actions."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_deploy_draft_version",
+        "x-operation-name": "deploy",
+        "x-operation-group": [
+          "actions",
+          "versions"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:actions"
+            ]
+          }
+        ]
+      }
+    },
+    "/actions/actions/{id}": {
+      "get": {
+        "summary": "Get an action",
+        "description": "Retrieve an action by its ID.\n",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the action to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The action was retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetActionResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: read:actions."
+          },
+          "404": {
+            "description": "The action does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_action",
+        "x-operation-name": "get",
+        "x-operation-group": "actions",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:actions"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete an action",
+        "description": "Deletes an action and all of its associated versions. An action must be unbound from all triggers before it can be deleted.\n",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the action to delete.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "force",
+            "in": "query",
+            "description": "Force action deletion detaching bindings",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Action successfully deleted."
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: delete:actions."
+          },
+          "404": {
+            "description": "The action version does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_action",
+        "x-operation-name": "delete",
+        "x-operation-request-parameters-name": "DeleteActionRequestParameters",
+        "x-operation-group": "actions",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:actions"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update an action",
+        "description": "Update an existing action. If this action is currently bound to a trigger, updating it will <strong>not</strong> affect any user flows until the action is deployed.\n",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the action to update.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateActionRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateActionRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Action successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateActionResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Request Body."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: update:actions."
+          },
+          "404": {
+            "description": "Action not found and cannot be updated."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_action",
+        "x-operation-name": "update",
+        "x-operation-group": "actions",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:actions"
+            ]
+          }
+        ]
+      }
+    },
+    "/actions/actions/{id}/deploy": {
+      "post": {
+        "summary": "Deploy an action",
+        "description": "Deploy an action. Deploying an action will create a new immutable version of the action. If the action is currently bound to a trigger, then the system will begin executing the newly deployed version of the action immediately. Otherwise, the action will only be executed as a part of a flow once it is bound to that flow.\n",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of an action.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Request to create action version was accepted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeployActionResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Request Body."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: create:actions."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_deploy_action",
+        "x-operation-name": "deploy",
+        "x-operation-group": "actions",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:actions"
+            ]
+          }
+        ]
+      }
+    },
+    "/actions/actions/{id}/test": {
+      "post": {
+        "summary": "Test an Action",
+        "description": "Test an action. After updating an action, it can be tested prior to being deployed to ensure it behaves as expected.\n",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the action to test.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TestActionRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/TestActionRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Test action version successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestActionResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Request Body."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: create:actions."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_test_action",
+        "x-operation-name": "test",
+        "x-operation-group": "actions",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:actions"
+            ]
+          }
+        ]
+      }
+    },
+    "/actions/executions/{id}": {
+      "get": {
+        "summary": "Get an execution",
+        "description": "Retrieve information about a specific execution of a trigger. Relevant execution IDs will be included in tenant logs generated as part of that authentication flow. Executions will only be stored for 10 days after their creation.\n",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The ID of the execution to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The execution was retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetActionExecutionResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: read:actions."
+          },
+          "404": {
+            "description": "The execution does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_execution",
+        "x-operation-name": "getExecution",
+        "x-operation-group": "actions",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:actions"
+            ]
+          }
+        ]
+      }
+    },
+    "/actions/triggers": {
+      "get": {
+        "summary": "Get triggers",
+        "description": "Retrieve the set of triggers currently available within actions. A trigger is an extensibility point to which actions can be bound.\n",
+        "tags": [
+          "actions"
+        ],
+        "responses": {
+          "200": {
+            "description": "The triggers were retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListActionTriggersResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: read:actions."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_triggers",
+        "x-operation-name": "list",
+        "x-operation-group": [
+          "actions",
+          "triggers"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:actions"
+            ]
+          }
+        ]
+      }
+    },
+    "/actions/triggers/{triggerId}/bindings": {
+      "get": {
+        "summary": "Get trigger bindings",
+        "description": "Retrieve the actions that are bound to a trigger. Once an action is created and deployed, it must be attached (i.e. bound) to a trigger so that it will be executed as part of a flow. The list of actions returned reflects the order in which they will be executed during the appropriate flow.\n",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "triggerId",
+            "in": "path",
+            "description": "An actions extensibility point.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ActionTriggerTypeEnum"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Use this field to request a specific page of the list results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "The maximum number of results to be returned in a single request. 20 by default",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The bindings were retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListActionBindingsPaginatedResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: read:actions."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_bindings",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListActionTriggerBindingsRequestParameters",
+        "x-operation-group": [
+          "actions",
+          "triggers",
+          "bindings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:actions"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update trigger bindings",
+        "description": "Update the actions that are bound (i.e. attached) to a trigger. Once an action is created and deployed, it must be attached (i.e. bound) to a trigger so that it will be executed as part of a flow. The order in which the actions are provided will determine the order in which they are executed.",
+        "tags": [
+          "actions"
+        ],
+        "parameters": [
+          {
+            "name": "triggerId",
+            "in": "path",
+            "description": "An actions extensibility point.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ActionTriggerTypeEnum"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateActionBindingsRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateActionBindingsRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "The bindings were updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateActionBindingsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Request Body.",
+            "x-description-1": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: update:actions."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_bindings",
+        "x-operation-name": "updateMany",
+        "x-operation-group": [
+          "actions",
+          "triggers",
+          "bindings"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:actions"
+            ]
+          }
+        ]
+      }
+    },
+    "/anomaly/blocks/ips/{id}": {
+      "get": {
+        "summary": "Check if an IP address is blocked",
+        "description": "Check if the given IP address is blocked via the <a href=\"https://auth0.com/docs/configure/attack-protection/suspicious-ip-throttling\">Suspicious IP Throttling</a> due to multiple suspicious attempts.",
+        "tags": [
+          "anomaly"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "IP address to check.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnomalyIPFormat"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "IP address specified is currently blocked."
+          },
+          "400": {
+            "description": "Connection does not exist.",
+            "x-description-1": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: get:anomaly_block."
+          },
+          "404": {
+            "description": "IP address specified is not currently blocked."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_ips_by_id",
+        "x-operation-name": "checkIfIpIsBlocked",
+        "x-operation-group": "anomaly",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:anomaly_blocks"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Remove the blocked IP address",
+        "description": "Remove a block imposed by <a href=\"https://auth0.com/docs/configure/attack-protection/suspicious-ip-throttling\">Suspicious IP Throttling</a> for the given IP address.",
+        "tags": [
+          "anomaly"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "IP address to unblock.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/AnomalyIPFormat"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "IP address specified successfully unblocked."
+          },
+          "400": {
+            "description": "Connection does not exist.",
+            "x-description-1": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:anomaly_block."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_ips_by_id",
+        "x-operation-name": "deleteBlockedIp",
+        "x-operation-group": "anomaly",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:anomaly_blocks"
+            ]
+          }
+        ]
+      }
+    },
+    "/attack-protection/breached-password-detection": {
+      "get": {
+        "summary": "Get Breached Password Detection settings",
+        "description": "Retrieve details of the Breached Password Detection configuration of your tenant.",
+        "tags": [
+          "attack-protection"
+        ],
+        "responses": {
+          "200": {
+            "description": "Breached password detection settings successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBreachedPasswordDetectionSettingsResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:attack_protection."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_breached-password-detection",
+        "x-operation-name": "getBreachedPasswordDetectionConfig",
+        "x-operation-group": "attackProtection",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:attack_protection"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Breached Password Detection settings",
+        "description": "Update details of the Breached Password Detection configuration of your tenant.",
+        "tags": [
+          "attack-protection"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBreachedPasswordDetectionSettingsRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBreachedPasswordDetectionSettingsRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Breached password detection settings successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBreachedPasswordDetectionSettingsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:attack_protection."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_breached-password-detection",
+        "x-operation-name": "updateBreachedPasswordDetectionConfig",
+        "x-operation-group": "attackProtection",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:attack_protection"
+            ]
+          }
+        ]
+      }
+    },
+    "/attack-protection/brute-force-protection": {
+      "get": {
+        "summary": "Get Brute-force settings",
+        "description": "Retrieve details of the Brute-force Protection configuration of your tenant.",
+        "tags": [
+          "attack-protection"
+        ],
+        "responses": {
+          "200": {
+            "description": "Brute force configuration successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBruteForceSettingsResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:attack_protection."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_brute-force-protection",
+        "x-operation-name": "getBruteForceConfig",
+        "x-operation-group": "attackProtection",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:attack_protection"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Brute-force settings",
+        "description": "Update the Brute-force Protection configuration of your tenant.",
+        "tags": [
+          "attack-protection"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBruteForceSettingsRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBruteForceSettingsRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Brute force configuration successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBruteForceSettingsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:attack_protection."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_brute-force-protection",
+        "x-operation-name": "updateBruteForceConfig",
+        "x-operation-group": "attackProtection",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:attack_protection"
+            ]
+          }
+        ]
+      }
+    },
+    "/attack-protection/suspicious-ip-throttling": {
+      "get": {
+        "summary": "Get Suspicious IP Throttling settings",
+        "description": "Retrieve details of the Suspicious IP Throttling configuration of your tenant.",
+        "tags": [
+          "attack-protection"
+        ],
+        "responses": {
+          "200": {
+            "description": "Suspicious IP throttling configuration successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSuspiciousIPThrottlingSettingsResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:attack_protection."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_suspicious-ip-throttling",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:attack_protection"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update Suspicious IP Throttling settings",
+        "description": "Update the details of the Suspicious IP Throttling configuration of your tenant.",
+        "tags": [
+          "attack-protection"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSuspiciousIPThrottlingSettingsRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSuspiciousIPThrottlingSettingsRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Suspicious IP throttling configuration successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSuspiciousIPThrottlingSettingsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:attack_protection."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_suspicious-ip-throttling",
+        "x-operation-name": "updateSuspiciousIpThrottlingConfig",
+        "x-operation-group": "attackProtection",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:attack_protection"
+            ]
+          }
+        ]
+      }
+    },
+    "/branding": {
+      "get": {
+        "summary": "Get branding settings",
+        "description": "Retrieve branding settings.",
+        "tags": [
+          "branding"
+        ],
+        "responses": {
+          "200": {
+            "description": "Branding settings successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBrandingResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "The specified client cannot perform the requested operation.",
+            "x-description-1": "Insufficient scope; expected any of: read:branding."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_branding",
+        "x-operation-name": "get",
+        "x-operation-group": "branding",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:branding"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update branding settings",
+        "description": "Update branding settings.",
+        "tags": [
+          "branding"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBrandingRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBrandingRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Branding settings successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBrandingResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:branding."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_branding",
+        "x-operation-name": "update",
+        "x-operation-group": "branding",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:branding"
+            ]
+          }
+        ]
+      }
+    },
+    "/branding/phone/providers": {
+      "get": {
+        "summary": "Get a list of phone providers",
+        "description": "Retrieve a list of <a href=\"https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers\">phone providers</a> details set for a Tenant. A list of fields to include or exclude may also be specified.\n",
+        "tags": [
+          "branding"
+        ],
+        "parameters": [
+          {
+            "name": "disabled",
+            "in": "query",
+            "description": "Whether the provider is enabled (false) or disabled (true).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Phone providers have been successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListBrandingPhoneProvidersResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:phone_provider."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_branding_phone_providers",
+        "x-operation-name": "listPhoneProviders",
+        "x-operation-request-parameters-name": "ListBrandingPhoneProvidersRequestParameters",
+        "x-operation-group": "branding",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:phone_providers"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Configure the phone provider",
+        "description": "Create a <a href=\"https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers\">phone provider</a>.\nThe <code>credentials</code> object requires different properties depending on the phone provider (which is specified using the <code>name</code> property).\n",
+        "tags": [
+          "branding"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBrandingPhoneProviderRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateBrandingPhoneProviderRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Phone notification provider successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateBrandingPhoneProviderResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:phone_provider."
+          },
+          "409": {
+            "description": "Custom phone provider conflict."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "create_phone_provider",
+        "x-operation-name": "createPhoneProvider",
+        "x-operation-group": "branding",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:phone_providers"
+            ]
+          }
+        ]
+      }
+    },
+    "/branding/phone/providers/{id}": {
+      "get": {
+        "summary": "Get a phone provider",
+        "description": "Retrieve <a href=\"https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers\">phone provider</a> details. A list of fields to include or exclude may also be specified.\n",
+        "tags": [
+          "branding"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Phone provider successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetBrandingPhoneProviderResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid id for provider."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:phone_provider."
+          },
+          "404": {
+            "description": "Phone provider has not been configured."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_phone_provider",
+        "x-operation-name": "getPhoneProvider",
+        "x-operation-group": "branding",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:phone_providers"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Deletes a Phone Provider",
+        "description": "Delete the configured phone provider.\n",
+        "tags": [
+          "branding"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Phone provider successfully deleted."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:phone_provider."
+          },
+          "404": {
+            "description": "Phone provider has not been configured."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_phone_provider",
+        "x-operation-name": "deletePhoneProvider",
+        "x-operation-group": "branding",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:phone_providers"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update the phone provider",
+        "description": "Update a <a href=\"https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers\">phone provider</a>.\nThe <code>credentials</code> object requires different properties depending on the phone provider (which is specified using the <code>name</code> property).\n",
+        "tags": [
+          "branding"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBrandingPhoneProviderRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBrandingPhoneProviderRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Phone provider successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateBrandingPhoneProviderResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:phone_provider."
+          },
+          "404": {
+            "description": "Phone provider has not been configured."
+          },
+          "409": {
+            "description": "Custom phone provider conflict."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "update_phone_provider",
+        "x-operation-name": "updatePhoneProvider",
+        "x-operation-group": "branding",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:phone_providers"
+            ]
+          }
+        ]
+      }
+    },
+    "/branding/phone/providers/{id}/try": {
+      "post": {
+        "summary": "Send a test phone notification for the configured provider",
+        "tags": [
+          "branding"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePhoneProviderSendTestRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePhoneProviderSendTestRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Phone notification sent.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreatePhoneProviderSendTestResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause.",
+            "x-description-1": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: create:phone_provider."
+          },
+          "404": {
+            "description": "Phone provider has not been configured."
+          },
+          "409": {
+            "description": "Custom phone provider conflict."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "try_phone_provider",
+        "x-operation-name": "testPhoneProvider",
+        "x-operation-group": "branding",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:phone_providers"
+            ]
+          }
+        ]
+      }
+    },
+    "/branding/phone/templates": {
+      "get": {
+        "summary": "Get a list of phone notification templates",
+        "tags": [
+          "branding"
+        ],
+        "parameters": [
+          {
+            "name": "disabled",
+            "in": "query",
+            "description": "Whether the template is enabled (false) or disabled (true).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The phone notification templates were retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListPhoneTemplatesResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation"
+          },
+          "403": {
+            "description": "Insufficient scope, expected any of: read:phone_templates"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_phone_templates",
+        "x-operation-name": "listPhoneTemplates",
+        "x-operation-request-parameters-name": "ListPhoneTemplatesRequestParameters",
+        "x-operation-group": "branding",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:phone_templates"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a phone notification template",
+        "tags": [
+          "branding"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePhoneTemplateRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreatePhoneTemplateRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {

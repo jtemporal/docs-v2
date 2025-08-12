@@ -135,10 +135,18 @@
                 ]
               },
               {
-                "group": "My Account APIs",
-                "pages": [
-                  "docs/apis/my-account/my-account"
-                ]
+                "group": "Management API Reference",
+                 "openapi": {
+                   "source": "mgmt-api-openapi.json",
+                   "directory": "management"
+                }
+              },
+              {
+                "group": "My Account API Reference",
+                 "openapi": {
+                   "source": "/path/to/openapi-1.json",
+                   "directory": "api-reference"
+                }
               }
             ]
           }
