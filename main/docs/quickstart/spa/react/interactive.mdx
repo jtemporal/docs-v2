@@ -19,51 +19,53 @@ mode: "wide"
 ## Get Started
 
 <Steps>
-  <Step title="Setup your app" stepNumber={1}>
-    Create a new app if you don't have one
+  <Step title="Create a new project" stepNumber={1}>
+    Create a new React project for this Quickstart
 
     ```shellscript
-    npm create vite@latest my-app --template react-ts
+    npm create vite@latest auth0-react -- --template react-ts
     ```
 
-    Open your app
+    Open the project
 
     ```shellscript
-    cd my-app
+    cd auth0-react
     ```
   </Step>
-  <Step title="Install the SDK" stepNumber={2}>
+  <Step title="Install the Auth0 React SDK" stepNumber={2}>
+    ```shellscript
+    npm add @auth0/auth0-react && npm install
+    ```
+  </Step>
+  <Step title="Setup your Auth0 App" stepNumber={3}>
+    Next up, you need to:
+
+    1. Create a new Single-Page Application on your Auth0 tenant.
+    2. Generate a .env file in your project's root directory with the Domain and Client ID of your newly created app.
+
+    You can manually set up your app on the [dashboard](https://manage.auth0.com/dashboard/) or run the following script to do this automatically:
+
     <Tabs>
-      <Tab title="npm">
+      <Tab title="Mac">
         ```shellscript
-        npm add @auth0/auth0-react && npm install
+        AUTH0_APP_NAME="My App" && brew tap auth0/auth0-cli && brew install auth0 && auth0 login --no-input && auth0 apps create -n "${AUTH0_APP_NAME}" -t spa -c http://localhost:5173 -l http://localhost:5173 -o http://localhost:5173 --json > auth0-app-details.json && CLIENT_ID=$(jq -r '.client_id' auth0-app-details.json) && DOMAIN=$(auth0 tenants list --json | jq -r '.[] | select(.active == true) | .name') && echo "VITE_AUTH0_DOMAIN=${DOMAIN}" > .env && echo "VITE_AUTH0_CLIENT_ID=${CLIENT_ID}" >> .env && rm auth0-app-details.json && echo ".env file created with your Auth0 details:" && cat .env
         ```
       </Tab>
-      <Tab title="yarn">
+      <Tab title="Windows">
         ```shellscript
-        yarn add @auth0/auth0-react && yarn install
-        ```
-      </Tab>
-      <Tab title="pnpm">
-        ```shellscript
-        pnpm add @auth0/auth0-react && pnpm install
+        $AppName = "My App"; winget install Auth0.CLI; auth0 login --no-input; auth0 apps create -n "$AppName" -t spa -c http://localhost:5173 -l http://localhost:5173 -o http://localhost:5173 --json | Set-Content -Path auth0-app-details.json; $ClientId = (Get-Content -Raw auth0-app-details.json | ConvertFrom-Json).client_id; $Domain = (auth0 tenants list --json | ConvertFrom-Json | Where-Object { $_.active -eq $true }).name; Set-Content -Path .env -Value "VITE_AUTH0_DOMAIN=$Domain"; Add-Content -Path .env -Value "VITE_AUTH0_CLIENT_ID=$ClientId"; Remove-Item auth0-app-details.json; Write-Output ".env file created with your Auth0 details:"; Get-Content .env
         ```
       </Tab>
     </Tabs>
   </Step>
-  <Step title="Setup your Auth0 App" stepNumber={3}>
-    ```shell
-    AUTH0_APP_NAME="My App" && brew tap auth0/auth0-cli && brew install auth0 && auth0 login --no-input && auth0 apps create -n "${AUTH0_APP_NAME}" -t spa -c http://localhost:5173 -l http://localhost:5173 -o http://localhost:5173 --json > auth0-app-details.json && CLIENT_ID=$(jq -r '.client_id' auth0-app-details.json) && DOMAIN=$(auth0 domains list --json | jq -r '.[0].domain') && echo "VITE_AUTH0_DOMAIN=${DOMAIN}" > .env && echo "VITE_AUTH0_CLIENT_ID=${CLIENT_ID}" >> .env && rm auth0-app-details.json && echo ".env file created with your Auth0 details:" && cat .env
-    ```
-  </Step>
   <Step title="Add the provider" stepNumber={4}>
-    ```javascript src/main.tsx lines highlight= {5, 9-15,17}
+    ```javascript src/main.tsx {5,9,10,11,12,13,14,15,17} lines
     import { StrictMode } from 'react';
     import { createRoot } from 'react-dom/client';
     import './index.css'; // Importing the main CSS file
     import App from './App.tsx';
     import { Auth0Provider } from '@auth0/auth0-react';
-
+    
     createRoot(document.getElementById('root')!).render(
       <StrictMode>
         <Auth0Provider
@@ -81,21 +83,24 @@ mode: "wide"
   </Step>
   <Step title="Create Login, Logout and Profile Components" stepNumber={5}>
     Create files
+
     ```shellscript
     touch src/LoginButton.tsx && touch src/LogoutButton.tsx && touch src/Profile.tsx
     ```
+
     And add the following code snippets
+
     <CodeGroup>
 
     ```javascript src/LoginButton.js lines
     import { useAuth0 } from "@auth0/auth0-react";
     import React from "react";
-
+    
     const LoginButton = (): JSX.Element => {
       const { loginWithRedirect } = useAuth0();
       return <button onClick={() => loginWithRedirect()} className="button login">Log In</button>;
     };
-
+    
     export default LoginButton;
     ```
 
@@ -103,7 +108,7 @@ mode: "wide"
     ```javascript src/LogoutButton.js lines
     import { useAuth0 } from "@auth0/auth0-react";
     import React from "react";
-
+    
     const LogoutButton = (): JSX.Element => {
       const { logout } = useAuth0();
       return (
@@ -115,7 +120,7 @@ mode: "wide"
         </button>
       );
     };
-
+    
     export default LogoutButton;
     ```
 
@@ -123,14 +128,14 @@ mode: "wide"
     ```javascript src/Profile.tsx lines
     import { useAuth0 } from "@auth0/auth0-react";
     import React from "react";
-
+    
     const Profile = (): JSX.Element => {
       const { user, isAuthenticated, isLoading } = useAuth0();
-
+    
       if (isLoading) {
         return <div className="loading-text">Loading profile...</div>;
       }
-
+    
       return (
         isAuthenticated && user ? (
           <div className="profile-card">
@@ -141,21 +146,21 @@ mode: "wide"
         ) : null
       );
     };
-
+    
     export default Profile;
     ```
 
     
-    ```javascript src/App.tsx lines [expandable]
+    ```javascript src/App.tsx expandable lines
     import React from 'react';
     import { useAuth0 } from '@auth0/auth0-react';
     import LoginButton from './LoginButton';
     import LogoutButton from './LogoutButton';
     import Profile from './Profile';
-
+    
     function App(): JSX.Element {
       const { isAuthenticated, isLoading, error } = useAuth0();
-
+    
       if (isLoading) {
         return (
           <div className="app-container loading-state">
@@ -163,7 +168,7 @@ mode: "wide"
           </div>
         );
       }
-
+    
       if (error) {
         return (
           <div className="app-container error-state">
@@ -173,7 +178,7 @@ mode: "wide"
           </div>
         );
       }
-
+    
       return (
         <div className="app-container">
           <div className="main-card-wrapper">
@@ -183,7 +188,7 @@ mode: "wide"
               className="auth0-logo"
             />
             <h1 className="main-title">Welcome to Auth0</h1>
-
+    
             {!isAuthenticated ? (
               <div className="action-card">
                 <p className="action-text">Securely authenticate your users with Auth0.</p>
@@ -201,14 +206,14 @@ mode: "wide"
         </div>
       );
     }
-
+    
     export default App;
     ```
 
     
-    ```css src/index.css lines [expandable]
+    ```css src/index.css expandable lines
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
+    
     body {
       margin: 0;
       font-family: 'Inter', sans-serif;
@@ -220,7 +225,7 @@ mode: "wide"
       color: #e2e8f0; /* Light text color */
       overflow: hidden; /* Prevent scrollbars */
     }
-
+    
     #root {
       width: 100%;
       height: 100%;
@@ -228,7 +233,7 @@ mode: "wide"
       justify-content: center;
       align-items: center;
     }
-
+    
     /* Base styles for app container */
     .app-container {
       display: flex;
@@ -240,7 +245,7 @@ mode: "wide"
       padding: 1rem;
       box-sizing: border-box;
     }
-
+    
     /* Loading State */
     .loading-state, .error-state {
       background-color: #2d313c;
@@ -249,36 +254,36 @@ mode: "wide"
       padding: 3rem;
       text-align: center;
     }
-
+    
     .loading-text {
       font-size: 1.8rem;
       font-weight: 500;
       color: #a0aec0;
       animation: pulse 1.5s infinite ease-in-out;
     }
-
+    
     /* Error State */
     .error-state {
       background-color: #c53030;
       color: #fff;
     }
-
+    
     .error-title {
       font-size: 2.8rem;
       font-weight: 700;
       margin-bottom: 0.5rem;
     }
-
+    
     .error-message {
       font-size: 1.3rem;
       margin-bottom: 0.5rem;
     }
-
+    
     .error-sub-message {
       font-size: 1rem;
       opacity: 0.8;
     }
-
+    
     /* Main UI Container */
     .main-card-wrapper {
       background-color: #262a33; /* Slightly lighter dark for the main container */
@@ -293,14 +298,14 @@ mode: "wide"
       width: 90%;
       animation: fadeInScale 0.8s ease-out forwards;
     }
-
+    
     .auth0-logo {
       width: 160px; /* Larger logo */
       margin-bottom: 1.5rem;
       opacity: 0; /* Hidden initially for animation */
       animation: slideInDown 1s ease-out forwards 0.2s;
     }
-
+    
     .main-title {
       font-size: 2.8rem; /* Adjusted font size */
       font-weight: 700;
@@ -311,7 +316,7 @@ mode: "wide"
       opacity: 0;
       animation: fadeIn 1s ease-out forwards 0.4s;
     }
-
+    
     /* Action Card (for login/prompt) */
     .action-card {
       background-color: #2d313c; /* Slightly darker than main wrapper for contrast */
@@ -326,7 +331,7 @@ mode: "wide"
       opacity: 0;
       animation: fadeIn 1s ease-out forwards 0.6s;
     }
-
+    
     .action-text {
       font-size: 1.25rem; /* Larger text */
       color: #cbd5e0; /* Off-white for body text */
@@ -334,7 +339,7 @@ mode: "wide"
       line-height: 1.6;
       font-weight: 400;
     }
-
+    
     /* Buttons */
     .button {
       padding: 1.1rem 2.8rem; /* Larger padding */
@@ -349,33 +354,33 @@ mode: "wide"
       letter-spacing: 0.08em;
       outline: none;
     }
-
+    
     .button:focus {
         box-shadow: 0 0 0 4px rgba(99, 179, 237, 0.5); /* Focus ring */
     }
-
+    
     .button.login {
       background-color: #63b3ed; /* Auth0 blue */
       color: #1a1e27; /* Dark text for contrast */
     }
-
+    
     .button.login:hover {
       background-color: #4299e1; /* Darker blue on hover */
       transform: translateY(-5px) scale(1.03); /* More pronounced lift */
       box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
     }
-
+    
     .button.logout {
       background-color: #fc8181; /* Auth0 red */
       color: #1a1e27;
     }
-
+    
     .button.logout:hover {
       background-color: #e53e3e; /* Darker red on hover */
       transform: translateY(-5px) scale(1.03);
       box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5);
     }
-
+    
     /* Logged In State */
     .logged-in-section {
       display: flex;
@@ -384,7 +389,7 @@ mode: "wide"
       gap: 1.5rem;
       width: 100%;
     }
-
+    
     .logged-in-message {
       font-size: 1.5rem;
       color: #68d391; /* Green for success */
@@ -393,7 +398,7 @@ mode: "wide"
       opacity: 0;
       animation: fadeIn 1s ease-out forwards 0.8s;
     }
-
+    
     .profile-section-title {
       font-size: 2.2rem;
       font-weight: 700;
@@ -403,7 +408,7 @@ mode: "wide"
       opacity: 0;
       animation: slideInUp 1s ease-out forwards 1s;
     }
-
+    
     /* Profile Card */
     .profile-card {
       padding: 2.2rem;
@@ -420,7 +425,7 @@ mode: "wide"
       opacity: 0;
       animation: scaleIn 0.8s ease-out forwards 1.2s;
     }
-
+    
     .profile-picture {
       width: 110px; /* Larger picture */
       height: 110px;
@@ -433,52 +438,52 @@ mode: "wide"
     .profile-picture:hover {
       transform: scale(1.05);
     }
-
+    
     .profile-name {
       font-size: 2rem; /* Larger name font */
       font-weight: 700;
       color: #f7fafc;
       margin-top: 0.5rem;
     }
-
+    
     .profile-email {
       font-size: 1.15rem; /* Slightly larger email font */
       color: #a0aec0;
       word-break: break-all;
       text-align: center;
     }
-
+    
     /* Keyframe animations */
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
     }
-
+    
     @keyframes fadeInScale {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
-
+    
     @keyframes slideInDown {
       from { opacity: 0; transform: translateY(-70px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
+    
     @keyframes slideInUp {
       from { opacity: 0; transform: translateY(50px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
+    
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.6; }
     }
-
+    
     @keyframes scaleIn {
       from { opacity: 0; transform: scale(0.8); }
       to { opacity: 1; transform: scale(1); }
     }
-
+    
     /* Responsive adjustments */
     @media (max-width: 600px) {
       .main-card-wrapper {
@@ -533,9 +538,8 @@ mode: "wide"
   </Step>
 </Steps>
 
-
 <Check>
   **Checkpoint**
 
   You should now have a fully functional Auth0 login page running on your localhost
-</Check> 
+</Check>
