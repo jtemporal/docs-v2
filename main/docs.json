@@ -131,11 +131,11 @@
               {
                 "group": " ",
                 "pages": [
-                  "docs/quickstarts"
+                  "docs/apis"
                 ]
               },
               {
-                "group": "Single-page app libraries",
+                "group": "My Account APIs",
                 "pages": [
                   "docs/quickstart/spa/angular/interactive",
                   "docs/quickstart/native/android/interactive"
