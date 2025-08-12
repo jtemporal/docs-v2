@@ -8,7 +8,7 @@
     "dark": "#3e58e7"
   },
   "logo": {
-    "light": "/logo/light.svg",
+    "light": "/images/logo.png",
     "dark": "/logo/dark.svg",
     "href": "https://auth0.com/"
   },
