@@ -24998,3 +24998,5003 @@
             }
           },
           "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:hooks.",
+            "x-description-1": "This endpoint is disabled for your tenant."
+          },
+          "404": {
+            "description": "The hook does not exist"
+          },
+          "409": {
+            "description": "A hook with the same name already exists."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_hooks_by_id",
+        "x-operation-name": "update",
+        "x-operation-group": "hooks",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:hooks"
+            ]
+          }
+        ]
+      }
+    },
+    "/hooks/{id}/secrets": {
+      "get": {
+        "summary": "Get hook secrets",
+        "description": "Retrieve a hook's secrets by the ID of the hook. \n",
+        "tags": [
+          "hooks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the hook to retrieve secrets from.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Hook secrets successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetHookSecretResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause.",
+            "x-description-1": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:hooks."
+          },
+          "404": {
+            "description": "Hook not found."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_secrets",
+        "x-operation-name": "getSecrets",
+        "x-operation-group": "hooks",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:hooks"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete hook secrets",
+        "description": "Delete one or more existing secrets for a given hook. Accepts an array of secret names to delete. ",
+        "tags": [
+          "hooks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the hook whose secrets to delete.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteHookSecretRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteHookSecretRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Hook secrets successfully deleted."
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:hooks."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_secrets",
+        "x-operation-name": "deleteSecrets",
+        "x-operation-group": "hooks",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:hooks"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update hook secrets",
+        "description": "Update one or more existing secrets for an existing hook. Accepts an object of key-value pairs, where the key is the name of the existing secret. \n",
+        "tags": [
+          "hooks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the hook whose secrets to update.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHookSecretRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateHookSecretRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Hook secrets successfully updated."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:hooks.",
+            "x-description-1": "This endpoint is disabled for your tenant."
+          },
+          "404": {
+            "description": "Hook or secret not found."
+          },
+          "409": {
+            "description": "Secret with the same name already exists."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_secrets",
+        "x-operation-name": "updateSecrets",
+        "x-operation-group": "hooks",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:hooks"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add hook secrets",
+        "description": "Add one or more secrets to an existing hook. Accepts an object of key-value pairs, where the key is the name of the secret. A hook can have a maximum of 20 secrets. \n",
+        "tags": [
+          "hooks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the hook to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateHookSecretRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateHookSecretRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Hook secrets successfully added."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:hooks.",
+            "x-description-1": "This endpoint is disabled for your tenant."
+          },
+          "409": {
+            "description": "Secret with the same name already exists."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_secrets",
+        "x-operation-name": "createSecrets",
+        "x-operation-group": "hooks",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:hooks"
+            ]
+          }
+        ]
+      }
+    },
+    "/jobs/users-exports": {
+      "post": {
+        "summary": "Create export users job",
+        "description": "Export all users to a file via a long-running job.",
+        "tags": [
+          "jobs"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExportUsersRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateExportUsersRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Job created successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateExportUsersResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause.",
+            "x-description-1": "The connection does not exist."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:users."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_users-exports",
+        "x-operation-name": "createExportUsers",
+        "x-operation-group": "jobs",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:users"
+            ]
+          }
+        ]
+      }
+    },
+    "/jobs/users-imports": {
+      "post": {
+        "summary": "Create import users job",
+        "description": "Import users from a <a href=\"https://auth0.com/docs/users/references/bulk-import-database-schema-examples\">formatted file</a> into a connection via a long-running job. When importing users, with or without upsert, the `email_verified` is set to `false` when the email address is added or updated. Users must verify their email address. To avoid this behavior, set `email_verified` to `true` in the imported data.",
+        "tags": [
+          "jobs"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateImportUsersRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Job successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateImportUsersResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause.",
+            "x-description-1": "Must provide 'users' file as multipart part.",
+            "x-description-2": "Payload validation error: 'Invalid multipart payload format'.",
+            "x-description-3": "Users file must not be empty.",
+            "x-description-4": "Must provide 'connection_id' as multipart part.",
+            "x-description-5": "Connection must be a database connection.",
+            "x-description-6": "Connection must be enabled.",
+            "x-description-7": "Payload validation error: 'String does not match pattern ^con_[A-Za-z0-9]{16}$' on property connection_id.",
+            "x-description-8": "The connection does not exist.",
+            "x-description-9": "Custom Database Connections without import mode are not allowed."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:users."
+          },
+          "413": {
+            "description": "Payload content length greater than maximum allowed: 512000."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          },
+          "500": {
+            "description": "Internal error."
+          }
+        },
+        "operationId": "post_users-imports",
+        "x-operation-name": "createImportUsers",
+        "x-operation-group": "jobs",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:users"
+            ]
+          }
+        ]
+      }
+    },
+    "/jobs/verification-email": {
+      "post": {
+        "summary": "Send an email address verification email",
+        "description": "Send an email to the specified user that asks them to click a link to <a href=\"https://auth0.com/docs/email/custom#verification-email\">verify their email address</a>.\n\nNote: You must have the `Status` toggle enabled for the verification email template for the email to be sent.",
+        "tags": [
+          "jobs"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVerificationEmailRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateVerificationEmailRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Job successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateVerificationEmailResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters. The message will vary depending on the cause.",
+            "x-description-1": "Connection must be a database connection.",
+            "x-description-2": "User does not have an email address.",
+            "x-description-3": "connection does not exist.",
+            "x-description-4": "Connection must be enabled.",
+            "x-description-5": "The organization does not exist"
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:users."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_verification-email",
+        "x-operation-name": "createVerificationEmail",
+        "x-operation-group": "jobs",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:users"
+            ]
+          }
+        ]
+      }
+    },
+    "/jobs/{id}": {
+      "get": {
+        "summary": "Get a job",
+        "description": "Retrieves a job. Useful to check its status.",
+        "tags": [
+          "jobs"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the job.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job retrieved successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetJobResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:users."
+          },
+          "404": {
+            "description": "Job not found."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_jobs_by_id",
+        "x-operation-name": "get",
+        "x-operation-group": "jobs",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:users",
+              "read:users"
+            ]
+          }
+        ]
+      }
+    },
+    "/jobs/{id}/errors": {
+      "get": {
+        "summary": "Get job error details",
+        "description": "Retrieve error details of a failed job.",
+        "tags": [
+          "jobs"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the job.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Job successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GetJobErrorResponseContent"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/GetJobGenericErrorResponseContent"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "The job was retrieved, but no errors were found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/GetJobErrorResponseContent"
+                      }
+                    },
+                    {
+                      "$ref": "#/components/schemas/GetJobGenericErrorResponseContent"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation"
+          },
+          "403": {
+            "description": "Insufficient scope, expected any of: create:users"
+          },
+          "404": {
+            "description": "The job does not exist"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_errors",
+        "x-operation-name": "getJobErrors",
+        "x-operation-group": "jobs",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:users",
+              "read:users"
+            ]
+          }
+        ]
+      }
+    },
+    "/keys/custom-signing": {
+      "get": {
+        "summary": "Get custom signing keys",
+        "description": "Get entire jwks representation of custom signing keys.",
+        "tags": [
+          "keys"
+        ],
+        "responses": {
+          "200": {
+            "description": "Custom signing keys were successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCustomSigningKeysResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:custom_signing_keys."
+          },
+          "404": {
+            "description": "No custom signing keys found for this tenant. Upload custom signing keys first."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_custom_signing_keys",
+        "x-operation-name": "get",
+        "x-operation-group": "customSigningKeys",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:custom_signing_keys"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete custom signing keys",
+        "description": "Delete entire jwks representation of custom signing keys.",
+        "tags": [
+          "keys"
+        ],
+        "responses": {
+          "204": {
+            "description": "Custom signing keys were successfully deleted."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:custom_signing_keys."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_custom_signing_keys",
+        "x-operation-name": "delete",
+        "x-operation-group": "customSigningKeys",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:custom_signing_keys"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "summary": "Create or replace custom signing keys",
+        "description": "Create or replace entire jwks representation of custom signing keys.",
+        "tags": [
+          "keys"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetCustomSigningKeysRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/SetCustomSigningKeysRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Custom signing keys were successfully created or replaced.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetCustomSigningKeysResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Payload validation error."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected all of: create:custom_signing_keys,update:custom_signing_keys."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "put_custom_signing_keys",
+        "x-operation-name": "set",
+        "x-operation-group": "customSigningKeys",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:custom_signing_keys",
+              "update:custom_signing_keys"
+            ]
+          }
+        ]
+      }
+    },
+    "/keys/encryption": {
+      "get": {
+        "summary": "Get all encryption keys",
+        "description": "Retrieve details of all the encryption keys associated with your tenant.",
+        "tags": [
+          "keys"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page. Default value is 50, maximum value is 100.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The keys were successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListEncryptionKeysResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:encryption_keys."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_encryption_keys",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListEncryptionKeysRequestParameters",
+        "x-operation-group": [
+          "keys",
+          "encryption"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:encryption_keys"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create the new encryption key",
+        "description": "Create the new, pre-activated encryption key, without the key material.",
+        "tags": [
+          "keys"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEncryptionKeyRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateEncryptionKeyRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The key was successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateEncryptionKeyResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Request body is invalid. Unsupported key \"type\" provided."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:encryption_keys."
+          },
+          "409": {
+            "description": "Encryption key has already been created."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_encryption",
+        "x-operation-name": "create",
+        "x-operation-group": [
+          "keys",
+          "encryption"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:encryption_keys"
+            ]
+          }
+        ]
+      }
+    },
+    "/keys/encryption/rekey": {
+      "post": {
+        "summary": "Rekey the key hierarchy",
+        "description": "Perform rekeying operation on the key hierarchy.",
+        "tags": [
+          "keys"
+        ],
+        "responses": {
+          "204": {
+            "description": "The key hierarchy was successfully rekeyed."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected all of: create:encryption_keys update:encryption_keys."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_encryption_rekey",
+        "x-operation-name": "rekey",
+        "x-operation-group": [
+          "keys",
+          "encryption"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:encryption_keys",
+              "update:encryption_keys"
+            ]
+          }
+        ]
+      }
+    },
+    "/keys/encryption/{kid}": {
+      "get": {
+        "summary": "Get the encryption key by its key id",
+        "description": "Retrieve details of the encryption key with the given ID.",
+        "tags": [
+          "keys"
+        ],
+        "parameters": [
+          {
+            "name": "kid",
+            "in": "path",
+            "description": "Encryption key ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The key was successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetEncryptionKeyResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid UUID format in uri.",
+            "x-description-1": "Invalid key id or unsupported key type."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:encryption_keys."
+          },
+          "404": {
+            "description": "The key does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_encryption_key",
+        "x-operation-name": "get",
+        "x-operation-group": [
+          "keys",
+          "encryption"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:encryption_keys"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete the encryption key by its key id",
+        "description": "Delete the custom provided encryption key with the given ID and move back to using native encryption key.",
+        "tags": [
+          "keys"
+        ],
+        "parameters": [
+          {
+            "name": "kid",
+            "in": "path",
+            "description": "Encryption key ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The key was successfully deleted."
+          },
+          "400": {
+            "description": "Invalid UUID format in uri.",
+            "x-description-1": "Invalid key id or unsupported key type."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:encryption_keys."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_encryption_key",
+        "x-operation-name": "delete",
+        "x-operation-group": [
+          "keys",
+          "encryption"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:encryption_keys"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Import the encryption key",
+        "description": "Import wrapped key material and activate encryption key.",
+        "tags": [
+          "keys"
+        ],
+        "parameters": [
+          {
+            "name": "kid",
+            "in": "path",
+            "description": "Encryption key ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportEncryptionKeyRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/ImportEncryptionKeyRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "The key was successfully imported.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ImportEncryptionKeyResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "The key ID was not found.",
+            "x-description-1": "Invalid UUID format in uri.",
+            "x-description-2": "Invalid input. Wrapped key material is invalid or unsupported key type."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:encryption_keys."
+          },
+          "409": {
+            "description": "Failed precondition. Key import not in progress or unable to find the wrapping key. Make sure you have followed all the steps to import a key."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_encryption_key",
+        "x-operation-name": "import",
+        "x-operation-group": [
+          "keys",
+          "encryption"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:encryption_keys"
+            ]
+          }
+        ]
+      }
+    },
+    "/keys/encryption/{kid}/wrapping-key": {
+      "post": {
+        "summary": "Create the public wrapping key",
+        "description": "Create the public wrapping key to wrap your own encryption key material.",
+        "tags": [
+          "keys"
+        ],
+        "parameters": [
+          {
+            "name": "kid",
+            "in": "path",
+            "description": "Encryption key ID",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "The public wrapping key was successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateEncryptionKeyPublicWrappingResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid UUID format in uri.",
+            "x-description-1": "Invalid key id or unsupported key type."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:encryption_keys."
+          },
+          "409": {
+            "description": "Failed precondition. Create new encryption key without the key material first."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_encryption_wrapping_key",
+        "x-operation-name": "createPublicWrappingKey",
+        "x-operation-group": [
+          "keys",
+          "encryption"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:encryption_keys"
+            ]
+          }
+        ]
+      }
+    },
+    "/keys/signing": {
+      "get": {
+        "summary": "Get all Application Signing Keys",
+        "description": "Retrieve details of all the application signing keys associated with your tenant.",
+        "tags": [
+          "keys"
+        ],
+        "responses": {
+          "200": {
+            "description": "The signing keys were retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/SigningKeys"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause.",
+            "x-description-1": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation"
+          },
+          "403": {
+            "description": "Insufficient scope, expected any of: read:signing_keys"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_signing_keys",
+        "x-operation-name": "list",
+        "x-operation-group": "signingKeys",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:signing_keys"
+            ]
+          }
+        ]
+      }
+    },
+    "/keys/signing/rotate": {
+      "post": {
+        "summary": "Rotate the Application Signing Key",
+        "description": "Rotate the application signing key of your tenant.",
+        "tags": [
+          "keys"
+        ],
+        "responses": {
+          "201": {
+            "description": "Signing key rotated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RotateSigningKeysResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected create:signing_keys and update:signing_keys."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_signing_keys",
+        "x-operation-name": "rotate",
+        "x-operation-group": "signingKeys",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:signing_keys",
+              "update:signing_keys"
+            ]
+          }
+        ]
+      }
+    },
+    "/keys/signing/{kid}": {
+      "get": {
+        "summary": "Get an Application Signing Key by its key id",
+        "description": "Retrieve details of the application signing key with the given ID.",
+        "tags": [
+          "keys"
+        ],
+        "parameters": [
+          {
+            "name": "kid",
+            "in": "path",
+            "description": "Key id of the key to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The signing keys were retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSigningKeysResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause.",
+            "x-description-1": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation"
+          },
+          "403": {
+            "description": "Insufficient scope, expected any of: read:signing_keys"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_signing_key",
+        "x-operation-name": "get",
+        "x-operation-group": "signingKeys",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:signing_keys"
+            ]
+          }
+        ]
+      }
+    },
+    "/keys/signing/{kid}/revoke": {
+      "put": {
+        "summary": "Revoke an Application Signing Key by its key id",
+        "description": "Revoke the application signing key with the given ID.",
+        "tags": [
+          "keys"
+        ],
+        "parameters": [
+          {
+            "name": "kid",
+            "in": "path",
+            "description": "Key id of the key to revoke",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Signing key revoked successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RevokedSigningKeysResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:signing_keys."
+          },
+          "404": {
+            "description": "Signing key not found."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "put_signing_keys",
+        "x-operation-name": "revoke",
+        "x-operation-group": "signingKeys",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:signing_keys"
+            ]
+          }
+        ]
+      }
+    },
+    "/log-streams": {
+      "get": {
+        "summary": "Get log streams",
+        "description": "Retrieve details on <a href=\"https://auth0.com/docs/logs/streams\">log streams</a>.\n<h5>Sample Response</h5><pre><code>[{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"eventbridge\",\n\t\"status\": \"active|paused|suspended\",\n\t\"sink\": {\n\t\t\"awsAccountId\": \"string\",\n\t\t\"awsRegion\": \"string\",\n\t\t\"awsPartnerEventSource\": \"string\"\n\t}\n}, {\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"http\",\n\t\"status\": \"active|paused|suspended\",\n\t\"sink\": {\n\t\t\"httpContentFormat\": \"JSONLINES|JSONARRAY\",\n\t\t\"httpContentType\": \"string\",\n\t\t\"httpEndpoint\": \"string\",\n\t\t\"httpAuthorization\": \"string\"\n\t}\n},\n{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"eventgrid\",\n\t\"status\": \"active|paused|suspended\",\n\t\"sink\": {\n\t\t\"azureSubscriptionId\": \"string\",\n\t\t\"azureResourceGroup\": \"string\",\n\t\t\"azureRegion\": \"string\",\n\t\t\"azurePartnerTopic\": \"string\"\n\t}\n},\n{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"splunk\",\n\t\"status\": \"active|paused|suspended\",\n\t\"sink\": {\n\t\t\"splunkDomain\": \"string\",\n\t\t\"splunkToken\": \"string\",\n\t\t\"splunkPort\": \"string\",\n\t\t\"splunkSecure\": \"boolean\"\n\t}\n},\n{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"sumo\",\n\t\"status\": \"active|paused|suspended\",\n\t\"sink\": {\n\t\t\"sumoSourceAddress\": \"string\",\n\t}\n},\n{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"datadog\",\n\t\"status\": \"active|paused|suspended\",\n\t\"sink\": {\n\t\t\"datadogRegion\": \"string\",\n\t\t\"datadogApiKey\": \"string\"\n\t}\n}]</code></pre>\n",
+        "tags": [
+          "log-streams"
+        ],
+        "responses": {
+          "200": {
+            "description": "Returning log streams",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LogStreamResponseSchema"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:log_streams.",
+            "x-description-1": "The account is not allowed to perform this operation."
+          },
+          "404": {
+            "description": "The log stream does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_log-streams",
+        "x-operation-name": "list",
+        "x-operation-group": "logStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:log_streams"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a log stream",
+        "description": "Create a log stream.\n<h5>Log Stream Types</h5> The <code>type</code> of log stream being created determines the properties required in the <code>sink</code> payload.\n<h5>HTTP Stream</h5> For an <code>http</code> Stream, the <code>sink</code> properties are listed in the payload below\nRequest: <pre><code>{\n\t\"name\": \"string\",\n\t\"type\": \"http\",\n\t\"sink\": {\n\t\t\"httpEndpoint\": \"string\",\n\t\t\"httpContentType\": \"string\",\n\t\t\"httpContentFormat\": \"JSONLINES|JSONARRAY\",\n\t\t\"httpAuthorization\": \"string\"\n\t}\n}</code></pre>\nResponse: <pre><code>{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"http\",\n\t\"status\": \"active\",\n\t\"sink\": {\n\t\t\"httpEndpoint\": \"string\",\n\t\t\"httpContentType\": \"string\",\n\t\t\"httpContentFormat\": \"JSONLINES|JSONARRAY\",\n\t\t\"httpAuthorization\": \"string\"\n\t}\n}</code></pre>\n<h5>Amazon EventBridge Stream</h5> For an <code>eventbridge</code> Stream, the <code>sink</code> properties are listed in the payload below\nRequest: <pre><code>{\n\t\"name\": \"string\",\n\t\"type\": \"eventbridge\",\n\t\"sink\": {\n\t\t\"awsRegion\": \"string\",\n\t\t\"awsAccountId\": \"string\"\n\t}\n}</code></pre>\nThe response will include an additional field <code>awsPartnerEventSource</code> in the <code>sink</code>: <pre><code>{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"eventbridge\",\n\t\"status\": \"active\",\n\t\"sink\": {\n\t\t\"awsAccountId\": \"string\",\n\t\t\"awsRegion\": \"string\",\n\t\t\"awsPartnerEventSource\": \"string\"\n\t}\n}</code></pre>\n<h5>Azure Event Grid Stream</h5> For an <code>Azure Event Grid</code> Stream, the <code>sink</code> properties are listed in the payload below\nRequest: <pre><code>{\n\t\"name\": \"string\",\n\t\"type\": \"eventgrid\",\n\t\"sink\": {\n\t\t\"azureSubscriptionId\": \"string\",\n\t\t\"azureResourceGroup\": \"string\",\n\t\t\"azureRegion\": \"string\"\n\t}\n}</code></pre>\nResponse: <pre><code>{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"http\",\n\t\"status\": \"active\",\n\t\"sink\": {\n\t\t\"azureSubscriptionId\": \"string\",\n\t\t\"azureResourceGroup\": \"string\",\n\t\t\"azureRegion\": \"string\",\n\t\t\"azurePartnerTopic\": \"string\"\n\t}\n}</code></pre>\n<h5>Datadog Stream</h5> For a <code>Datadog</code> Stream, the <code>sink</code> properties are listed in the payload below\nRequest: <pre><code>{\n\t\"name\": \"string\",\n\t\"type\": \"datadog\",\n\t\"sink\": {\n\t\t\"datadogRegion\": \"string\",\n\t\t\"datadogApiKey\": \"string\"\n\t}\n}</code></pre>\nResponse: <pre><code>{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"datadog\",\n\t\"status\": \"active\",\n\t\"sink\": {\n\t\t\"datadogRegion\": \"string\",\n\t\t\"datadogApiKey\": \"string\"\n\t}\n}</code></pre>\n<h5>Splunk Stream</h5> For a <code>Splunk</code> Stream, the <code>sink</code> properties are listed in the payload below\nRequest: <pre><code>{\n\t\"name\": \"string\",\n\t\"type\": \"splunk\",\n\t\"sink\": {\n\t\t\"splunkDomain\": \"string\",\n\t\t\"splunkToken\": \"string\",\n\t\t\"splunkPort\": \"string\",\n\t\t\"splunkSecure\": \"boolean\"\n\t}\n}</code></pre>\nResponse: <pre><code>{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"splunk\",\n\t\"status\": \"active\",\n\t\"sink\": {\n\t\t\"splunkDomain\": \"string\",\n\t\t\"splunkToken\": \"string\",\n\t\t\"splunkPort\": \"string\",\n\t\t\"splunkSecure\": \"boolean\"\n\t}\n}</code></pre>\n<h5>Sumo Logic Stream</h5> For a <code>Sumo Logic</code> Stream, the <code>sink</code> properties are listed in the payload below\nRequest: <pre><code>{\n\t\"name\": \"string\",\n\t\"type\": \"sumo\",\n\t\"sink\": {\n\t\t\"sumoSourceAddress\": \"string\",\n\t}\n}</code></pre>\nResponse: <pre><code>{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"sumo\",\n\t\"status\": \"active\",\n\t\"sink\": {\n\t\t\"sumoSourceAddress\": \"string\",\n\t}\n}</code></pre>\n",
+        "tags": [
+          "log-streams"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLogStreamRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateLogStreamRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Log stream created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateLogStreamResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:log_streams.",
+            "x-description-1": "The account is not allowed to perform this operation."
+          },
+          "409": {
+            "description": "You have reached the maximum number of log streams for your account."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_log-streams",
+        "x-operation-name": "create",
+        "x-operation-group": "logStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:log_streams"
+            ]
+          }
+        ]
+      }
+    },
+    "/log-streams/{id}": {
+      "get": {
+        "summary": "Get log stream by ID",
+        "description": "Retrieve a log stream configuration and status.\n<h5>Sample responses</h5><h5>Amazon EventBridge Log Stream</h5><pre><code>{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"eventbridge\",\n\t\"status\": \"active|paused|suspended\",\n\t\"sink\": {\n\t\t\"awsAccountId\": \"string\",\n\t\t\"awsRegion\": \"string\",\n\t\t\"awsPartnerEventSource\": \"string\"\n\t}\n}</code></pre> <h5>HTTP Log Stream</h5><pre><code>{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"http\",\n\t\"status\": \"active|paused|suspended\",\n\t\"sink\": {\n\t\t\"httpContentFormat\": \"JSONLINES|JSONARRAY\",\n\t\t\"httpContentType\": \"string\",\n\t\t\"httpEndpoint\": \"string\",\n\t\t\"httpAuthorization\": \"string\"\n\t}\n}</code></pre> <h5>Datadog Log Stream</h5><pre><code>{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"datadog\",\n\t\"status\": \"active|paused|suspended\",\n\t\"sink\": {\n\t\t\"datadogRegion\": \"string\",\n\t\t\"datadogApiKey\": \"string\"\n\t}\n\n}</code></pre><h5>Mixpanel</h5>\n\t\n\tRequest: <pre><code>{\n\t  \"name\": \"string\",\n\t  \"type\": \"mixpanel\",\n\t  \"sink\": {\n\t\t\"mixpanelRegion\": \"string\", // \"us\" | \"eu\",\n\t\t\"mixpanelProjectId\": \"string\",\n\t\t\"mixpanelServiceAccountUsername\": \"string\",\n\t\t\"mixpanelServiceAccountPassword\": \"string\"\n\t  }\n\t} </code></pre>\n\t\n\t\n\tResponse: <pre><code>{\n\t\t\"id\": \"string\",\n\t\t\"name\": \"string\",\n\t\t\"type\": \"mixpanel\",\n\t\t\"status\": \"active\",\n\t\t\"sink\": {\n\t\t  \"mixpanelRegion\": \"string\", // \"us\" | \"eu\",\n\t\t  \"mixpanelProjectId\": \"string\",\n\t\t  \"mixpanelServiceAccountUsername\": \"string\",\n\t\t  \"mixpanelServiceAccountPassword\": \"string\" // the following is redacted on return\n\t\t}\n\t  } </code></pre>\n\n\t<h5>Segment</h5>\n\n\tRequest: <pre><code> {\n\t  \"name\": \"string\",\n\t  \"type\": \"segment\",\n\t  \"sink\": {\n\t\t\"segmentWriteKey\": \"string\"\n\t  }\n\t}</code></pre>\n\t\n\tResponse: <pre><code>{\n\t  \"id\": \"string\",\n\t  \"name\": \"string\",\n\t  \"type\": \"segment\",\n\t  \"status\": \"active\",\n\t  \"sink\": {\n\t\t\"segmentWriteKey\": \"string\"\n\t  }\n\t} </code></pre>\n\t\n<h5>Splunk Log Stream</h5><pre><code>{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"splunk\",\n\t\"status\": \"active|paused|suspended\",\n\t\"sink\": {\n\t\t\"splunkDomain\": \"string\",\n\t\t\"splunkToken\": \"string\",\n\t\t\"splunkPort\": \"string\",\n\t\t\"splunkSecure\": \"boolean\"\n\t}\n}</code></pre> <h5>Sumo Logic Log Stream</h5><pre><code>{\n\t\"id\": \"string\",\n\t\"name\": \"string\",\n\t\"type\": \"sumo\",\n\t\"status\": \"active|paused|suspended\",\n\t\"sink\": {\n\t\t\"sumoSourceAddress\": \"string\",\n\t}\n}</code></pre> <h5>Status</h5> The <code>status</code> of a log stream maybe any of the following:\n1. <code>active</code> - Stream is currently enabled.\n2. <code>paused</code> - Stream is currently user disabled and will not attempt log delivery.\n3. <code>suspended</code> - Stream is currently disabled because of errors and will not attempt log delivery.\n",
+        "tags": [
+          "log-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the log stream to get",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returning log stream.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetLogStreamResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:log_streams.",
+            "x-description-1": "The account is not allowed to perform this operation."
+          },
+          "404": {
+            "description": "The log stream does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_log-streams_by_id",
+        "x-operation-name": "get",
+        "x-operation-group": "logStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:log_streams"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete log stream",
+        "description": "Delete a log stream.\n",
+        "tags": [
+          "log-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the log stream to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The log stream was deleted."
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected: delete:log_streams."
+          },
+          "404": {
+            "description": "The log stream does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_log-streams_by_id",
+        "x-operation-name": "delete",
+        "x-operation-group": "logStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:log_streams"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update a log stream",
+        "description": "Update a log stream.\n<h4>Examples of how to use the PATCH endpoint.</h4> The following fields may be updated in a PATCH operation: <ul><li>name</li><li>status</li><li>sink</li></ul> Note: For log streams of type <code>eventbridge</code> and <code>eventgrid</code>, updating the <code>sink</code> is not permitted.\n<h5>Update the status of a log stream</h5><pre><code>{\n\t\"status\": \"active|paused\"\n}</code></pre>\n<h5>Update the name of a log stream</h5><pre><code>{\n\t\"name\": \"string\"\n}</code></pre>\n<h5>Update the sink properties of a stream of type <code>http</code></h5><pre><code>{\n  \"sink\": {\n    \"httpEndpoint\": \"string\",\n    \"httpContentType\": \"string\",\n    \"httpContentFormat\": \"JSONARRAY|JSONLINES\",\n    \"httpAuthorization\": \"string\"\n  }\n}</code></pre>\n<h5>Update the sink properties of a stream of type <code>datadog</code></h5><pre><code>{\n  \"sink\": {\n\t\t\"datadogRegion\": \"string\",\n\t\t\"datadogApiKey\": \"string\"\n  }\n}</code></pre>\n<h5>Update the sink properties of a stream of type <code>splunk</code></h5><pre><code>{\n  \"sink\": {\n    \"splunkDomain\": \"string\",\n    \"splunkToken\": \"string\",\n    \"splunkPort\": \"string\",\n    \"splunkSecure\": \"boolean\"\n  }\n}</code></pre>\n<h5>Update the sink properties of a stream of type <code>sumo</code></h5><pre><code>{\n  \"sink\": {\n    \"sumoSourceAddress\": \"string\"\n  }\n}</code></pre> ",
+        "tags": [
+          "log-streams"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the log stream to get",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLogStreamRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateLogStreamRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Log stream updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateLogStreamResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:log_streams.",
+            "x-description-1": "The account is not allowed to perform this operation."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_log-streams_by_id",
+        "x-operation-name": "update",
+        "x-operation-group": "logStreams",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:log_streams"
+            ]
+          }
+        ]
+      }
+    },
+    "/logs": {
+      "get": {
+        "summary": "Search log events",
+        "description": "Retrieve log entries that match the specified search criteria (or all log entries if no criteria specified).\n\nSet custom search criteria using the <code>q</code> parameter, or search from a specific log ID (<i>\"search from checkpoint\"</i>).\n\nFor more information on all possible event types, their respective acronyms, and descriptions, see <a href=\"https://auth0.com/docs/logs/log-event-type-codes\">Log Event Type Codes</a>.\n\n<h5>To set custom search criteria, use the following parameters:</h5>\n\n<ul>\n    <li><b>q:</b> Search Criteria using <a href=\"https://auth0.com/docs/logs/log-search-query-syntax\">Query String Syntax</a></li>\n    <li><b>page:</b> Page index of the results to return. First page is 0.</li>\n    <li><b>per_page:</b> Number of results per page.</li>\n    <li><b>sort:</b> Field to use for sorting appended with `:1` for ascending and `:-1` for descending. e.g. `date:-1`</li>\n    <li><b>fields:</b> Comma-separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields.</li>\n    <li><b>include_fields:</b> Whether specified fields are to be included (true) or excluded (false).</li>\n    <li><b>include_totals:</b> Return results inside an object that contains the total result count (true) or as a direct array of results (false, default). <b>Deprecated:</b> this field is deprecated and should be removed from use. See <a href=\"https://auth0.com/docs/product-lifecycle/deprecations-and-migrations/migrate-to-tenant-log-search-v3#pagination\">Search Engine V3 Breaking Changes</a></li>\n</ul>\n\nFor more information on the list of fields that can be used in <code>fields</code> and <code>sort</code>, see <a href=\"https://auth0.com/docs/logs/log-search-query-syntax#searchable-fields\">Searchable Fields</a>.\n\nAuth0 <a href=\"https://auth0.com/docs/logs/retrieve-log-events-using-mgmt-api#limitations\">limits the number of logs</a> you can return by search criteria to 100 logs per request. Furthermore, you may paginate only through 1,000 search results. If you exceed this threshold, please redefine your search or use the <a href=\"https://auth0.com/docs/logs/retrieve-log-events-using-mgmt-api#retrieve-logs-by-checkpoint\">get logs by checkpoint method</a>.\n\n<h5>To search from a checkpoint log ID, use the following parameters:</h5>\n<ul>\n    <li><b>from:</b> Log Event ID from which to start retrieving logs. You can limit the number of logs returned using the <code>take</code> parameter. If you use <code>from</code> at the same time as <code>q</code>, <code>from</code> takes precedence and <code>q</code> is ignored.</li>\n    <li><b>take:</b> Number of entries to retrieve when using the <code>from</code> parameter.</li>\n</ul>\n\n<strong>Important:</strong> When fetching logs from a checkpoint log ID, any parameter other than <code>from</code> and <code>take</code> will be ignored, and date ordering is not guaranteed.\n",
+        "tags": [
+          "logs"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": " Number of results per page. Paging is disabled if parameter not sent. Default: <code>50</code>. Max value: <code>100</code>",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Field to use for sorting appended with <code>:1</code>  for ascending and <code>:-1</code> for descending. e.g. <code>date:-1</code>",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Comma-separated list of fields to include or exclude (based on value provided for <code>include_fields</code>) in the result. Leave empty to retrieve all fields.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "include_fields",
+            "in": "query",
+            "description": "Whether specified fields are to be included (<code>true</code>) or excluded (<code>false</code>)",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results as an array when false (default). Return results inside an object that also contains a total result count when true.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Log Event Id from which to start selection from.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "description": "Number of entries to retrieve when using the <code>from</code> parameter. Default <code>50</code>, max <code>100</code>",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "description": "Query in <a target='_new' href ='http://www.lucenetutorial.com/lucene-query-syntax.html'>Lucene query string syntax</a>.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Logs successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListLogResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:logs, read:logs_users."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_logs",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListLogsRequestParameters",
+        "x-operation-group": "logs",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:logs",
+              "read:logs_users"
+            ]
+          }
+        ]
+      }
+    },
+    "/logs/{id}": {
+      "get": {
+        "summary": "Get a log event by id",
+        "description": "Retrieve an individual log event.",
+        "tags": [
+          "logs"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "log_id of the log to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Log successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetUserLogResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:logs, read:logs_users."
+          },
+          "404": {
+            "description": "Log not found."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_logs_by_id",
+        "x-operation-name": "get",
+        "x-operation-group": "users",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:logs",
+              "read:logs_users"
+            ]
+          }
+        ]
+      }
+    },
+    "/network-acls": {
+      "get": {
+        "summary": "Get all access control list entries for a tenant",
+        "description": "Get all access control list entries for your client.",
+        "tags": [
+          "network-acls"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Use this field to request a specific page of the list results.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "The amount of results per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Network access control list successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListNetworkAclsResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:network_acls."
+          },
+          "404": {
+            "description": "Network access control list not found."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_network-acls",
+        "x-release-lifecycle": "EA",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListNetworkAclsRequestParameters",
+        "x-operation-group": "networkAcls",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:network_acls"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create Access Control List",
+        "description": "Create a new access control list for your client.",
+        "tags": [
+          "network-acls"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNetworkAclRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateNetworkAclRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Network ACL successfully created."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Entitlement is not enabled for this tenant. Please upgrade your subscription to enable Tenant ACL Management.",
+            "x-description-1": "Tenant ACL Management is not enabled for this tenant.",
+            "x-description-0": "Insufficient scope; expected any of: create:network_acls."
+          },
+          "409": {
+            "description": "A Network ACL with this priority number has already been created."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          },
+          "500": {
+            "description": "There was an error retrieving Networks ACLs subscription settings."
+          }
+        },
+        "operationId": "post_network-acls",
+        "x-release-lifecycle": "EA",
+        "x-operation-name": "create",
+        "x-operation-group": "networkAcls",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:network_acls"
+            ]
+          }
+        ]
+      }
+    },
+    "/network-acls/{id}": {
+      "get": {
+        "summary": "Get a specific access control list entry for a tenant",
+        "description": "Get a specific access control list entry for your client.",
+        "tags": [
+          "network-acls"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the access control list to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Suspicious IP throttling configuration successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetNetworkAclsResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:network_acls."
+          },
+          "404": {
+            "description": "Network access control list not found."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_network-acls_by_id",
+        "x-release-lifecycle": "EA",
+        "x-operation-name": "get",
+        "x-operation-group": "networkAcls",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:network_acls"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete Access Control List",
+        "description": "Delete existing access control list for your client.",
+        "tags": [
+          "network-acls"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the ACL to delete",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Network ACL successfully deleted"
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Tenant ACL Management is not enabled for this tenant.",
+            "x-description-1": "Insufficient scope; expected any of: delete:network_acls."
+          },
+          "404": {
+            "description": "This ACL does not exist"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_network-acls_by_id",
+        "x-release-lifecycle": "EA",
+        "x-operation-name": "delete",
+        "x-operation-group": "networkAcls",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:network_acls"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Partial Update for an Access Control List",
+        "description": "Update existing access control list for your client.",
+        "tags": [
+          "network-acls"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the ACL to update.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNetworkAclRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateNetworkAclRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Network ACL properties successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateNetworkAclResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:network_acls."
+          },
+          "404": {
+            "description": "Network ACL not found and cannot be updated"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_network-acls_by_id",
+        "x-release-lifecycle": "EA",
+        "x-operation-name": "update",
+        "x-operation-group": "networkAcls",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:network_acls"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "summary": "Update Access Control List",
+        "description": "Update existing access control list for your client.",
+        "tags": [
+          "network-acls"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the ACL to update.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetNetworkAclRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/SetNetworkAclRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Network ACL properties successfully updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SetNetworkAclsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:network_acls."
+          },
+          "404": {
+            "description": "Network ACL not found and cannot be updated"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "put_network-acls_by_id",
+        "x-release-lifecycle": "EA",
+        "x-operation-name": "set",
+        "x-operation-group": "networkAcls",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:network_acls"
+            ]
+          }
+        ]
+      }
+    },
+    "/organizations": {
+      "get": {
+        "summary": "Get organizations",
+        "description": "Retrieve detailed list of all Organizations available in your tenant. For more information, see Auth0 Organizations.\n\nThis endpoint supports two types of pagination:\n<ul>\n<li>Offset pagination</li>\n<li>Checkpoint pagination</li>\n</ul>\n\nCheckpoint pagination must be used if you need to retrieve more than 1000 organizations.\n\n<h2>Checkpoint Pagination</h2>\n\nTo search by checkpoint, use the following parameters:\n<ul>\n<li><code>from</code>: Optional id from which to start selection.</li>\n<li><code>take</code>: The total number of entries to retrieve when using the <code>from</code> parameter. Defaults to 50.</li>\n</ul>\n\n<b>Note</b>: The first time you call this endpoint using checkpoint pagination, omit the <code>from</code> parameter. If there are more results, a <code>next</code> value is included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, no pages are remaining.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Optional Id from which to start selection.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Field to sort by. Use <code>field:order</code> where order is <code>1</code> for ascending and <code>-1</code> for descending. e.g. <code>created_at:1</code>. We currently support sorting by the following fields: <code>name</code>, <code>display_name</code> and <code>created_at</code>.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organizations successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrganizationsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause.",
+            "x-description-1": "Invalid query string paging options. The message will vary depending on the cause"
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:organizations."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_organizations",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListOrganizationsRequestParameters",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:organizations",
+              "read:organizations_summary"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create an Organization",
+        "description": "Create a new Organization within your tenant.  To learn more about Organization settings, behavior, and configuration options, review <a href=\"https://auth0.com/docs/manage-users/organizations/create-first-organization\">Create Your First Organization</a>.\n",
+        "tags": [
+          "organizations"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Organization successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrganizationResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:organizations."
+          },
+          "409": {
+            "description": "An organization with this name already exists."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_organizations",
+        "x-operation-name": "create",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:organizations",
+              "create:organization_connections"
+            ]
+          }
+        ]
+      }
+    },
+    "/organizations/name/{name}": {
+      "get": {
+        "summary": "Get organization by name",
+        "description": "Retrieve details about a single Organization specified by name.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "description": "name of the organization to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organization successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrganizationByNameResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:organizations."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_name_by_name",
+        "x-operation-name": "getByName",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:organizations"
+            ]
+          }
+        ]
+      }
+    },
+    "/organizations/{id}": {
+      "get": {
+        "summary": "Get organization",
+        "description": "Retrieve details about a single Organization specified by ID. \n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the organization to retrieve.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organization successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrganizationResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:organizations."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_organizations_by_id",
+        "x-operation-name": "get",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:organizations",
+              "read:organizations_summary"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete organization",
+        "description": "Remove an Organization from your tenant.  This action cannot be undone. \n\n<b>Note</b>: Members are automatically disassociated from an Organization when it is deleted. However, this action does <b>not</b> delete these users from your tenant.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The organization was deleted."
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:organizations."
+          },
+          "404": {
+            "description": "The organization does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_organizations_by_id",
+        "x-operation-name": "delete",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:organizations"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Modify an Organization",
+        "description": "Update the details of a specific <a href=\"https://auth0.com/docs/manage-users/organizations/configure-organizations/create-organizations\">Organization</a>, such as name and display name, branding options, and metadata.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the organization to update.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrganizationRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrganizationRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Organization successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrganizationResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:organizations."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_organizations_by_id",
+        "x-operation-name": "update",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:organizations"
+            ]
+          }
+        ]
+      }
+    },
+    "/organizations/{id}/client-grants": {
+      "get": {
+        "summary": "Get client grants associated to an organization",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "audience",
+            "in": "query",
+            "description": "Optional filter on audience of the client grant.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "client_id",
+            "in": "query",
+            "description": "Optional filter on client_id of the client grant.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "grant_ids",
+            "in": "query",
+            "description": "Optional filter on the ID of the client grant. Must be URL encoded and may be specified multiple times (max 10).<br /><b>e.g.</b> <i>../client-grants?grant_ids=id1&grant_ids=id2</i>",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "client-grant-id"
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Client grants successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrganizationClientGrantsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause.",
+            "x-description-1": "Invalid query string paging options. The message will vary depending on the cause"
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:organization_client_grants."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_organization-client-grants",
+        "x-operation-name": "listClientGrants",
+        "x-operation-request-parameters-name": "ListOrganizationClientGrantsRequestParameters",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:organization_client_grants"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Associate a client grant with an organization",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssociateOrganizationClientGrantRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/AssociateOrganizationClientGrantRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Client Grant successfully associated with Organization.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AssociateOrganizationClientGrantResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:organization_client_grants."
+          },
+          "404": {
+            "description": "The grant does not exist.",
+            "x-description-1": "No organization found by that id"
+          },
+          "409": {
+            "description": "The client grant has already been added to this organization.",
+            "x-description-1": "Quota exceeded; cannot add more than 100 client grants to a single organization"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "create_organization-client-grants",
+        "x-operation-name": "associateClientGrant",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:organization_client_grants"
+            ]
+          }
+        ]
+      }
+    },
+    "/organizations/{id}/client-grants/{grant_id}": {
+      "delete": {
+        "summary": "Remove a client grant from an organization",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "grant_id",
+            "in": "path",
+            "description": "The Client Grant ID to remove from the organization",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "The Client Grant was removed from the Organization."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:organization_client_grants."
+          },
+          "404": {
+            "description": "No organization found by that id."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_client-grants_by_grant_id",
+        "x-operation-name": "deleteClientGrant",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:organization_client_grants"
+            ]
+          }
+        ]
+      }
+    },
+    "/organizations/{id}/enabled_connections": {
+      "get": {
+        "summary": "Get connections enabled for an organization",
+        "description": "Retrieve details about a specific connection currently enabled for an Organization. Information returned includes details such as connection ID, name, strategy, and whether the connection automatically grants membership upon login.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Connections successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrganizationConnectionsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:organization_connections."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_enabled_connections",
+        "x-operation-name": "listConnections",
+        "x-operation-request-parameters-name": "ListOrganizationConnectionsRequestParameters",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:organization_connections"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add connections to an organization",
+        "description": "Enable a specific connection for a given Organization. To enable a connection, it must already exist within your tenant; connections cannot be created through this action.\n\n<a href=\"https://auth0.com/docs/authenticate/identity-providers\">Connections</a> represent the relationship between Auth0 and a source of users. Available types of connections include database, enterprise, and social.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddOrganizationConnectionRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/AddOrganizationConnectionRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Organization connection successfully added.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AddOrganizationConnectionResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:organization_connections."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_enabled_connections",
+        "x-operation-name": "addConnection",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:organization_connections"
+            ]
+          }
+        ]
+      }
+    },
+    "/organizations/{id}/enabled_connections/{connectionId}": {
+      "get": {
+        "summary": "Get an enabled connection for an organization",
+        "description": "Retrieve details about a specific connection currently enabled for an Organization. Information returned includes details such as connection ID, name, strategy, and whether the connection automatically grants membership upon login.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "description": "Connection identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Connection successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrganizationConnectionResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:organization_connections."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_enabled_connections_by_connectionId",
+        "x-operation-name": "getConnection",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:organization_connections"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete connections from an organization",
+        "description": "Disable a specific connection for an Organization. Once disabled, Organization members can no longer use that connection to authenticate. \n\n<b>Note</b>: This action does not remove the connection from your tenant.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "description": "Connection identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Connection successfully removed from organization."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:organization_connections."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_enabled_connections_by_connectionId",
+        "x-operation-name": "deleteConnection",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:organization_connections"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update the Connection of an Organization",
+        "description": "Modify the details of a specific connection currently enabled for an Organization.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "connectionId",
+            "in": "path",
+            "description": "Connection identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrganizationConnectionRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateOrganizationConnectionRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Organization connection successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateOrganizationConnectionResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:organization_connections."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_enabled_connections_by_connectionId",
+        "x-operation-name": "updateConnection",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:organization_connections"
+            ]
+          }
+        ]
+      }
+    },
+    "/organizations/{id}/invitations": {
+      "get": {
+        "summary": "Get invitations to an organization",
+        "description": "Retrieve a detailed list of invitations sent to users for a specific Organization. The list includes details such as inviter and invitee information, invitation URLs, and dates of creation and expiration. To learn more about Organization invitations, review <a href=\"https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members\">Invite Organization Members</a>. \n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "When true, return results inside an object that also contains the start and limit.  When false (default), a direct array of results is returned.  We do not yet support returning the total invitations count.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "include_fields",
+            "in": "query",
+            "description": "Whether specified fields are to be included (true) or excluded (false). Defaults to true.",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "sort",
+            "in": "query",
+            "description": "Field to sort by. Use field:order where order is 1 for ascending and -1 for descending Defaults to created_at:-1.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invitations successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrganizationInvitationsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Requesting page exceeds the allowed maximum of 1000 records",
+            "x-description-0": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Client is not global.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Invalid token."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:organization_invitations."
+          },
+          "404": {
+            "description": "No organization found by that id."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_invitations",
+        "x-operation-name": "listInvitations",
+        "x-operation-request-parameters-name": "ListOrganizationInvitationsRequestParameters",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:organization_invitations"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create invitations to an organization",
+        "description": "Create a user invitation for a specific Organization. Upon creation, the listed user receives an email inviting them to join the Organization. To learn more about Organization invitations, review <a href=\"https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members\">Invite Organization Members</a>. \n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationInvitationRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationInvitationRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Invitation successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateOrganizationInvitationResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A default login route is required to generate the invitation url. For more information, see https://auth0.com/docs/universal-login/configure-default-login-routes",
+            "x-description-1": "One or more of the specified roles do not exist: rol_0000000000000001, rol_0000000000000002",
+            "x-description-2": "Passwordless connections are not supported.",
+            "x-description-3": "The specified client_id does not allow organizations.",
+            "x-description-4": "The specified client_id does not exist.",
+            "x-description-5": "The specified connection (con_0000000000000001) is not enabled for the organization",
+            "x-description-6": "The specified connection does not exist.",
+            "x-description-0": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Client is not global.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Invalid token."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:organization_invitations."
+          },
+          "404": {
+            "description": "No organization found by that id."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_invitations",
+        "x-operation-name": "createInvitation",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:organization_invitations"
+            ]
+          }
+        ]
+      }
+    },
+    "/organizations/{id}/invitations/{invitation_id}": {
+      "get": {
+        "summary": "Get a specific invitation to an Organization",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invitation_id",
+            "in": "path",
+            "description": "The id of the user invitation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "include_fields",
+            "in": "query",
+            "description": "Whether specified fields are to be included (true) or excluded (false). Defaults to true.",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invitation successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetOrganizationInvitationResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Client is not global.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Invalid token."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:organization_invitations."
+          },
+          "404": {
+            "description": "No organization found by that id.",
+            "x-description-1": "The invitation does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_invitations_by_invitation_id",
+        "x-operation-name": "getInvitation",
+        "x-operation-request-parameters-name": "GetOrganizationInvitationRequestParameters",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:organization_invitations"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete an invitation to an Organization",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "invitation_id",
+            "in": "path",
+            "description": "The id of the user invitation.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Invitation successfully deleted."
+          },
+          "401": {
+            "description": "Client is not global.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Invalid token."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:organization_invitations."
+          },
+          "404": {
+            "description": "No organization found by that id."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_invitations_by_invitation_id",
+        "x-operation-name": "deleteInvitation",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:organization_invitations"
+            ]
+          }
+        ]
+      }
+    },
+    "/organizations/{id}/members": {
+      "get": {
+        "summary": "Get members who belong to an organization",
+        "description": "List organization members.\nThis endpoint is subject to eventual consistency. New users may not be immediately included in the response and deleted users may not be immediately removed from it.\n\n<ul>\n  <li>\n    Use the <code>fields</code> parameter to optionally define the specific member details retrieved. If <code>fields</code> is left blank, all fields (except roles) are returned.\n  </li>\n  <li>\n    Member roles are not sent by default. Use <code>fields=roles</code> to retrieve the roles assigned to each listed member. To use this parameter, you must include the <code>read:organization_member_roles</code> scope in the token.\n  </li>\n</ul>\n\nThis endpoint supports two types of pagination:\n\n- Offset pagination\n- Checkpoint pagination\n\nCheckpoint pagination must be used if you need to retrieve more than 1000 organization members.\n\n<h2>Checkpoint Pagination</h2>\n\nTo search by checkpoint, use the following parameters: - from: Optional id from which to start selection. - take: The total amount of entries to retrieve when using the from parameter. Defaults to 50. Note: The first time you call this endpoint using Checkpoint Pagination, you should omit the <code>from</code> parameter. If there are more results, a <code>next</code> value will be included in the response. You can use this for subsequent API calls. When <code>next</code> is no longer included in the response, this indicates there are no more pages remaining.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Optional Id from which to start selection.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "take",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "description": "Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "include_fields",
+            "in": "query",
+            "description": "Whether specified fields are to be included (true) or excluded (false).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Members successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrganizationMembersResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause.",
+            "x-description-1": "Invalid query string paging options. The message will vary depending on the cause"
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:organization_members, read:organization_member_roles."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_organization_members",
+        "x-operation-name": "listMembers",
+        "x-operation-request-parameters-name": "ListOrganizationMembersRequestParameters",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:organization_members"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete members from an organization",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteOrganizationMembersRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteOrganizationMembersRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Users successfully removed from organization."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:organization_members."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_members",
+        "x-operation-name": "deleteMembers",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:organization_members"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Add members to an organization",
+        "description": "Set one or more existing users as members of a specific <a href=\"https://auth0.com/docs/manage-users/organizations\">Organization</a>.\n\nTo add a user to an Organization through this action, the user must already exist in your tenant. If a user does not yet exist, you can <a href=\"https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members\">invite them to create an account</a>, manually create them through the Auth0 Dashboard, or use the Management API.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationMemberRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateOrganizationMemberRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Members successfully added to organization."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:organization_members."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_members",
+        "x-operation-name": "createMember",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:organization_members"
+            ]
+          }
+        ]
+      }
+    },
+    "/organizations/{id}/members/{user_id}/roles": {
+      "get": {
+        "summary": "Get user roles assigned to an Organization member",
+        "description": "Retrieve detailed list of roles assigned to a given user within the context of a specific Organization. \n\nUsers can be members of multiple Organizations with unique roles assigned for each membership. This action only returns the roles associated with the specified Organization; any roles assigned to the user within other Organizations are not included.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of the user to associate roles with.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page. Defaults to 50.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Roles successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListOrganizationMemberRolesResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause.",
+            "x-description-1": "Invalid query string paging options. The message will vary depending on the cause"
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:organization_member_roles."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_organization_member_roles",
+        "x-operation-name": "listMemberRoles",
+        "x-operation-request-parameters-name": "ListOrganizationMemberRolesRequestParameters",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:organization_member_roles"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete user roles from an Organization member",
+        "description": "Remove one or more Organization-specific <a href=\"https://auth0.com/docs/manage-users/access-control/rbac\">roles</a> from a given user.\n\nUsers can be members of multiple Organizations with unique roles assigned for each membership. This action removes roles from a user in relation to the specified Organization. Roles assigned to the user within a different Organization cannot be managed in the same call.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "User ID of the organization member to remove roles from.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteOrganizationMemberRolesRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteOrganizationMemberRolesRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Roles successfully removed from organization member."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: delete:organization_member_roles."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_organization_member_roles",
+        "x-operation-name": "deleteMemberRoles",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:organization_member_roles"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Assign user roles to an Organization member",
+        "description": "Assign one or more <a href=\"https://auth0.com/docs/manage-users/access-control/rbac\">roles</a> to a user to determine their access for a specific Organization.\n\nUsers can be members of multiple Organizations with unique roles assigned for each membership. This action assigns roles to a user only for the specified Organization. Roles cannot be assigned to a user across multiple Organizations in the same call.\n",
+        "tags": [
+          "organizations"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Organization identifier.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "user_id",
+            "in": "path",
+            "description": "ID of the user to associate roles with.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignOrganizationMemberRolesRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/AssignOrganizationMemberRolesRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Roles successfully associated with user."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation.",
+            "x-description-2": "Client is not global."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:organization_member_roles."
+          },
+          "409": {
+            "description": "No more roles can be assigned to this organization member."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_organization_member_roles",
+        "x-operation-name": "assignMemberRoles",
+        "x-operation-group": "organizations",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:organization_member_roles"
+            ]
+          }
+        ]
+      }
+    },
+    "/prompts": {
+      "get": {
+        "summary": "Get prompt settings",
+        "description": "Retrieve details of the Universal Login configuration of your tenant. This includes the <a href=\"https://auth0.com/docs/authenticate/login/auth0-universal-login/identifier-first\">Identifier First Authentication</a> and <a href=\"https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-device-biometrics-for-mfa\">WebAuthn with Device Biometrics for MFA</a> features.",
+        "tags": [
+          "prompts"
+        ],
+        "responses": {
+          "200": {
+            "description": "Prompt settings successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetSettingsResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "The specified client cannot perform the requested operation.",
+            "x-description-1": "Insufficient scope; expected any of: read:prompts."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_prompts",
+        "x-operation-name": "getSettings",
+        "x-operation-group": "prompts",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:prompts"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update prompt settings",
+        "description": "Update the Universal Login configuration of your tenant. This includes the <a href=\"https://auth0.com/docs/authenticate/login/auth0-universal-login/identifier-first\">Identifier First Authentication</a> and <a href=\"https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-device-biometrics-for-mfa\">WebAuthn with Device Biometrics for MFA</a> features.",
+        "tags": [
+          "prompts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSettingsRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateSettingsRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prompts settings successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateSettingsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:prompts."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_prompts",
+        "x-operation-name": "updateSettings",
+        "x-operation-group": "prompts",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:prompts"
+            ]
+          }
+        ]
+      }
+    },
+    "/prompts/{prompt}/custom-text/{language}": {
+      "get": {
+        "summary": "Get custom text for a prompt",
+        "description": "Retrieve custom text for a specific prompt and language.",
+        "tags": [
+          "prompts"
+        ],
+        "parameters": [
+          {
+            "name": "prompt",
+            "in": "path",
+            "description": "Name of the prompt.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PromptGroupNameEnum"
+            }
+          },
+          {
+            "name": "language",
+            "in": "path",
+            "description": "Language to update.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PromptLanguageEnum"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prompt dictionaries successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetCustomTextsByLanguageResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause.",
+            "x-description-1": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:prompts."
+          },
+          "404": {
+            "description": "The prompt does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_custom-text_by_language",
+        "x-operation-name": "getCustomTextByLanguage",
+        "x-operation-group": "prompts",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:prompts"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "summary": "Set custom text for a specific prompt",
+        "description": "Set custom text for a specific prompt. Existing texts will be overwritten.",
+        "tags": [
+          "prompts"
+        ],
+        "parameters": [
+          {
+            "name": "prompt",
+            "in": "path",
+            "description": "Name of the prompt.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PromptGroupNameEnum"
+            }
+          },
+          {
+            "name": "language",
+            "in": "path",
+            "description": "Language to update.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PromptLanguageEnum"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetsCustomTextsByLanguageRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/SetsCustomTextsByLanguageRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Prompt dictionaries successfully updated."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:prompts."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "put_custom-text_by_language",
+        "x-operation-name": "setCustomTextByLanguage",
+        "x-operation-group": "prompts",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:prompts"
+            ]
+          }
+        ]
+      }
+    },
+    "/prompts/{prompt}/partials": {
+      "get": {
+        "summary": "Get partials for a prompt",
+        "description": "Get template partials for a prompt",
+        "tags": [
+          "prompts"
+        ],
+        "parameters": [
+          {
+            "name": "prompt",
+            "in": "path",
+            "description": "Name of the prompt.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PartialGroupsEnum"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Prompt partials successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetPartialsResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause.",
+            "x-description-1": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:prompts.",
+            "x-description-1": "Permission Denied. This feature is not available on this plan."
+          },
+          "404": {
+            "description": "The prompt does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_partials",
+        "x-operation-name": "getPartials",
+        "x-operation-group": "prompts",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:prompts"
+            ]
+          }
+        ]
+      },
+      "put": {
+        "summary": "Set partials for a prompt",
+        "description": "Set template partials for a prompt",
+        "tags": [
+          "prompts"
+        ],
+        "parameters": [
+          {
+            "name": "prompt",
+            "in": "path",
+            "description": "Name of the prompt.",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PartialGroupsEnum"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SetPartialsRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/SetPartialsRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Template partials successfully updated."
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:prompts.",
+            "x-description-1": "Permission Denied. This feature is not available on this plan."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "put_partials",
+        "x-operation-name": "setPartials",
+        "x-operation-group": "prompts",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:prompts"
+            ]
+          }
+        ]
+      }
+    },
+    "/prompts/{prompt}/screen/{screen}/rendering": {
+      "get": {
+        "summary": "Get render settings for a screen",
+        "description": "Get render settings for a screen.",
+        "tags": [
+          "prompts"
+        ],
+        "parameters": [
+          {
+            "name": "prompt",
+            "in": "path",
+            "description": "Name of the prompt",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PromptGroupNameEnum"
+            }
+          },
+          {
+            "name": "screen",
+            "in": "path",
+            "description": "Name of the screen",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ScreenGroupNameEnum"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "ACUL settings successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetAculResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "402": {
+            "description": "A paid subscription is required to use Advanced Customizations."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: read:prompts.",
+            "x-description-1": "This tenant does not have Advanced Customizations enabled.",
+            "x-description-2": "This screen is not available in Advanced Customizations"
+          },
+          "404": {
+            "description": "The prompt does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_rendering",
+        "x-operation-name": "getAcul",
+        "x-operation-group": "prompts",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:prompts"
+            ]
+          }
+        ]
+      },
+      "patch": {
+        "summary": "Update render settings for a screen",
+        "description": "Learn more about <a href='https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens'>configuring render settings</a> for advanced customization.\n\n<p>\n  Example <code>head_tags</code> array. See our <a href='https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens'>documentation</a> on using Liquid variables within head tags.\n</p>\n<pre>{\n  \"head_tags\": [\n    {\n      \"tag\": \"script\",\n      \"attributes\": {\n        \"defer\": true,\n        \"src\": \"URL_TO_ASSET\",\n        \"async\": true,\n        \"integrity\": [\n          \"ASSET_SHA\"\n        ]\n      }\n    },\n    {\n      \"tag\": \"link\",\n      \"attributes\": {\n        \"href\": \"URL_TO_ASSET\",\n        \"rel\": \"stylesheet\"\n      }\n    }\n  ]\n}\n</pre>\n",
+        "tags": [
+          "prompts"
+        ],
+        "parameters": [
+          {
+            "name": "prompt",
+            "in": "path",
+            "description": "Name of the prompt",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PromptGroupNameEnum"
+            }
+          },
+          {
+            "name": "screen",
+            "in": "path",
+            "description": "Name of the screen",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/ScreenGroupNameEnum"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAculRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAculRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ACUL settings successfully updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateAculResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause.",
+            "x-description-1": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "402": {
+            "description": "A paid subscription is required to use Advanced Customizations."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: update:prompts.",
+            "x-description-1": "This tenant does not have Advanced Customizations enabled.",
+            "x-description-2": "This screen is not available in Advanced Customizations"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "patch_rendering",
+        "x-operation-name": "updateAcul",
+        "x-operation-group": "prompts",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "update:prompts"
+            ]
+          }
+        ]
+      }
+    },
+    "/refresh-tokens/{id}": {
+      "get": {
+        "summary": "Get a refresh token",
+        "description": "Retrieve refresh token information.",
+        "tags": [
+          "refresh-tokens"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID refresh token to retrieve",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The refresh token was retrieved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GetRefreshTokenResponseContent"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation"
+          },
+          "403": {
+            "description": "Insufficient scope, expected: read:refresh_tokens"
+          },
+          "404": {
+            "description": "The refresh token does not exist."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_refresh_token",
+        "x-operation-name": "get",
+        "x-operation-group": "refreshTokens",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:refresh_tokens"
+            ]
+          }
+        ]
+      },
+      "delete": {
+        "summary": "Delete a refresh tokens",
+        "description": "Delete a refresh token by its ID.",
+        "tags": [
+          "refresh-tokens"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of the refresh token to delete.",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Refresh token deletion request accepted."
+          },
+          "400": {
+            "description": "Invalid request URI. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected: delete:refresh_tokens"
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "delete_refresh_token",
+        "x-operation-name": "delete",
+        "x-operation-group": "refreshTokens",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "delete:refresh_tokens"
+            ]
+          }
+        ]
+      }
+    },
+    "/resource-servers": {
+      "get": {
+        "summary": "Get resource servers",
+        "description": "Retrieve details of all APIs associated with your tenant.",
+        "tags": [
+          "resource-servers"
+        ],
+        "parameters": [
+          {
+            "name": "identifiers",
+            "in": "query",
+            "description": "An optional filter on the resource server identifier. Must be URL encoded and may be specified multiple times (max 10).<br /><b>e.g.</b> <i>../resource-servers?identifiers=id1&identifiers=id2</i>",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page index of the results to return. First page is 0.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "per_page",
+            "in": "query",
+            "description": "Number of results per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "include_totals",
+            "in": "query",
+            "description": "Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "include_fields",
+            "in": "query",
+            "description": "Whether specified fields are to be included (true) or excluded (false).",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Resource servers successfully retrieved.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ListResourceServerResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request query string. The message will vary depending on the cause."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope, expected any of: read:resource_servers."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "get_resource-servers",
+        "x-operation-name": "list",
+        "x-operation-request-parameters-name": "ListResourceServerRequestParameters",
+        "x-operation-group": "resourceServers",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "read:resource_servers"
+            ]
+          }
+        ]
+      },
+      "post": {
+        "summary": "Create a resource server",
+        "description": "Create a new API associated with your tenant. Note that all new APIs must be registered with Auth0. For more information, read <a href=\"https://www.auth0.com/docs/get-started/apis\"> APIs</a>.",
+        "tags": [
+          "resource-servers"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateResourceServerRequestContent"
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateResourceServerRequestContent"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Resource server successfully created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateResourceServerResponseContent"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request body. The message will vary depending on the cause.",
+            "x-description-1": "The selected identifier is reserved."
+          },
+          "401": {
+            "description": "Invalid token.",
+            "x-description-1": "Client is not global.",
+            "x-description-2": "Invalid signature received for JSON Web Token validation."
+          },
+          "403": {
+            "description": "Insufficient scope; expected any of: create:resource_servers.",
+            "x-description-1": "You reached the limit of entities of this type for this tenant."
+          },
+          "409": {
+            "description": "A resource server with the same identifier already exists."
+          },
+          "429": {
+            "description": "Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers."
+          }
+        },
+        "operationId": "post_resource-servers",
+        "x-operation-name": "create",
+        "x-operation-group": "resourceServers",
+        "security": [
+          {
+            "bearerAuth": []
+          },
+          {
+            "oAuth2ClientCredentials": [
+              "create:resource_servers"
+            ]
+          }
+        ]
+      }
+    },
+    "/resource-servers/{id}": {
