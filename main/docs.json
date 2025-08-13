@@ -132,11 +132,11 @@
                 "group": " ",
                 "pages": [
                   "docs/apis/overview"
-                ],
-                "groups": [{
-                  "group": "My Org API Reference",
-                  "openapi": "docs/apis/my-org/my-org-openapi.json"
-                }]
+                ]
+              },
+              {
+                "group": "My Org API Reference",
+                "openapi": "docs/apis/my-org/my-org-openapi.json"
               }
             ]
           }
