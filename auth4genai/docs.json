@@ -87,6 +87,40 @@
         ]
       },
       {
+        "tab": "Integrations",
+        "groups": [
+          {
+            "group": " ",
+            "pages": [
+              "integrations/overview",
+              {
+                "group": "Social Integrations",
+                "pages": [
+                  "integrations/google",
+                  "integrations/github"
+                ]
+              },
+              {
+                "group": "Enterprise Integrations", 
+                "pages": [
+                  "integrations/microsoft",
+                  "integrations/slack",
+                  "integrations/box",
+                  "integrations/salesforce"
+                ]
+              },
+              {
+                "group": "Custom Integrations",
+                "pages": [
+                  "integrations/oidc",
+                  "integrations/custom"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
         "tab": "How-Tos",
         "groups": [
           {
@@ -194,6 +228,22 @@
     {
       "source": "/client-initiated-account-linking",
       "destination": "/guides/client-initiated-account-linking"
+    },
+    {
+      "source": "/connections",
+      "destination": "/integrations/overview"
+    },
+    {
+      "source": "/google-connection",
+      "destination": "/integrations/google"
+    },
+    {
+      "source": "/microsoft-connection", 
+      "destination": "/integrations/microsoft"
+    },
+    {
+      "source": "/github-connection",
+      "destination": "/integrations/github"
     }
   ],
   "logo": {
