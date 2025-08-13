@@ -136,7 +136,7 @@
               },
               {
                 "group": "My Org API Reference",
-                "openapi": "docs/api/my-org/my-org-openapi.json"
+                "openapi": "docs/apis/my-org/my-org-openapi.json"
               }
             ]
           }
